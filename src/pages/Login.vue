@@ -1,12 +1,10 @@
-<template>
-  <q-page class="row items-center justify-evenly"> </q-page>
-</template>
+<template>LOGIN</template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'PageIndex',
+  name: 'Login',
   setup() {
     return {};
   },
