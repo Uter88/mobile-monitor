@@ -3,43 +3,47 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, reactive } from 'vue';
+import { defineComponent, onMounted, ref, computed, watch } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { useStore } from 'src/store';
 
 export default defineComponent({
   name: 'Map',
   setup() {
     const map = ref<L.Map>();
+    const store = useStore();
     const getMap = () => map.value as L.Map;
 
-    const zoom = ref(12);
-    const center = reactive({ lat: 52.505, lng: 35.422 });
+    const zoom = computed(() => store.state.main.zoom);
+    const center = computed(() => store.state.main.center);
 
     const initMap = () => {
+      void store.dispatch('main/getPosition');
       const m = L.map('map', { renderer: L.canvas() });
-      m.setView(center, zoom.value);
+      m.setView(center.value, zoom.value);
       map.value = m;
       initLayers(m);
       initEvents(m);
     };
 
     const initLayers = (m: L.Map) => {
-      L.tileLayer(
-        'https://mt1.googleapis.com/vt/lyrs=m&src=app&x={x}&y={y}&z={z}&s=Galileo'
-      ).addTo(m);
+      const tiles = L.control.layers();
+      for (const l of store.state.main.tileLayers) {
+        const layer = L.tileLayer(l.url);
+        if (l.name === 'Google') layer.addTo(m);
+        tiles.addBaseLayer(layer, l.name);
+      }
+      tiles.addTo(m);
     };
 
     const initEvents = (m: L.Map) => {
       m.on('zoom', () => {
-        zoom.value = m.getZoom();
+        store.commit('main/setZoom', m.getZoom());
         resize();
       });
       m.on('drag', () => {
-        const { lat, lng } = m.getCenter();
-        center.lat = lat;
-        center.lng = lng;
-        resize();
+        store.commit('main/setCenter', m.getCenter());
       });
     };
 
@@ -48,6 +52,9 @@ export default defineComponent({
     };
 
     onMounted(initMap);
+
+    watch(zoom, (z) => getMap().setZoom(z));
+    watch(center, (c) => getMap().setView(c));
 
     return {
       map,
