@@ -31,6 +31,7 @@ module.exports = configure(function (ctx) {
     boot: [
       'i18n',
       'axios',
+      'app'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -102,7 +103,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['BottomSheet']
+      plugins: ['Dialog']
     },
 
     // animations: 'all', // --- includes all animations
