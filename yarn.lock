@@ -1455,11 +1455,6 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vue-leaflet/vue-leaflet@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@vue-leaflet/vue-leaflet/-/vue-leaflet-0.6.1.tgz#d731a5d2256d049e345f58330616180191d88b12"
-  integrity sha512-/sm0bdrdftXh5nSGEPsoKrJI1D/GtKiEsBo9X/TA2yu4lYTDcaem6U4t1Ea5CoLleiZRCNUrZr9PG/xHdUPXYA==
-
 "@vue/compiler-core@3.2.20":
   version "3.2.20"
   resolved "https://registry.npmjs.org/@vue/compiler-core/-/compiler-core-3.2.20.tgz"
@@ -6002,11 +5997,6 @@ vue-i18n@^9.0.0:
     "@intlify/shared" "9.1.9"
     "@intlify/vue-devtools" "9.1.9"
     "@vue/devtools-api" "^6.0.0-beta.7"
-
-vue-leaflet@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vue-leaflet/-/vue-leaflet-0.1.0.tgz#eaa23ee52468a2aee4466df422c181131ad054ac"
-  integrity sha1-6qI+5SRooq7kRm30IsGBExrQVKw=
 
 vue-loader@16.5.0:
   version "16.5.0"

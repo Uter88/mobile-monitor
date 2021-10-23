@@ -11,7 +11,7 @@
     "
     v-if="form"
   >
-    <q-icon name="img: icons/main/signal.svg" size="150px" />
+    <q-icon name="img: icons/main/signal.svg" size="130px" class="animate-icon" />
     <div class="column q-mt-xl full-width q-px-md q-gutter-y-lg">
       <q-input
         rounded
@@ -119,4 +119,28 @@ export default defineComponent({
 <style lang="sass">
 .login-contant
   background: linear-gradient(#63ACB0, #A0EACF)
+
+.animate-icon
+  background: linear-gradient(#23d5ab, #63ACB0, #A0EACF)
+  border-radius: 50%
+  padding: 20px
+  box-shadow: 0 0 0 0 rgba(42,176,174, 1)
+  animation: pulse-red 5s infinite
+
+@keyframes pulse-red 
+  0% 
+    transform: scale(0.95)
+    box-shadow: 0 0 0 0 rgba(42,176,174, 0.7)
+    background-position: 0% 50%
+  
+  70% 
+    transform: scale(1)
+    box-shadow: 0 0 0 10px rgba(42,176,174, 0)
+    background-position: 100% 50%
+  
+  100% 
+    transform: scale(0.95)
+    box-shadow: 0 0 0 0 rgba(42,176,174, 0)
+    background-position: 0% 50%
+
 </style>

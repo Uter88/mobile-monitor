@@ -20,7 +20,7 @@ export default defineComponent({
 
     const initMap = () => {
       void store.dispatch('main/getPosition');
-      const m = L.map('map', { renderer: L.canvas() });
+      const m = L.map('map', { renderer: L.canvas(), zoomControl: false });
       m.setView(center.value, zoom.value);
       map.value = m;
       initLayers(m);
