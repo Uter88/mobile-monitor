@@ -6,4 +6,5 @@ export default {
   enter: 'вход',
   objects: 'объекты',
   events: 'события',
+  all_objects: 'Все объекты',
 };

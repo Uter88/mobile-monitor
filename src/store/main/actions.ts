@@ -37,6 +37,11 @@ const actions: ActionTree<MaineStateInterface, StateInterface> = {
       return ctx.state.user as unknown as User;
     }
   },
+  async getGroups(ctx) {
+    const url = ctx.getters['getApi']('get_groups') as string;
+    const { data } = await Axios.get(url);
+    ctx.commit('setGroups', data);
+  },
 };
 
 export default actions;

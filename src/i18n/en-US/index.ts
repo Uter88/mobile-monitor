@@ -9,4 +9,5 @@ export default {
   enter: 'enter',
   objects: 'objects',
   events: 'events',
+  all_objects: 'All objects',
 };

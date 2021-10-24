@@ -25,6 +25,7 @@ export class Tracker {
   company_id: number;
 
   protected _marker: L.Marker | undefined;
+  protected _isCurrent = false;
 
   constructor(tr: Tracker) {
     this.brand = tr.brand || '';
@@ -147,6 +148,18 @@ export class Tracker {
     return new Tracker(this);
   }
 
+  setCurrent() {
+    this._isCurrent = true;
+  }
+
+  unsetCurrent() {
+    this._isCurrent = false;
+  }
+
+  get isCurrent() {
+    return this._isCurrent;
+  }
+
   get label(): string {
     const set = new Set([this.state_number, this.brand, this.model]);
     return Array.from(set).join(' ');
@@ -222,10 +235,7 @@ export class Tracker {
   }
 
   getIcon(): string {
-    let name = this.state.icons[0].name;
-    const az = this.state.az - (this.state.az % 15);
-    const color = name.split('_')[1];
-    name = 'deg' + az.toString() + '_' + color;
+    const name = this.state.icons[0].name;
     return 'icons/tracker/' + name + '.gif';
   }
 
