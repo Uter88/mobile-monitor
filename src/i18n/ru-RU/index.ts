@@ -4,6 +4,13 @@ export default {
   close: 'закрыть',
   save: 'сохранить',
   enter: 'вход',
+  exit: 'выход',
   objects: 'объекты',
   events: 'события',
+  all_objects: 'Все объекты',
+  layers: 'слои',
+  center: 'центр',
+  location: 'местоположение',
+  traffic_jams: 'пробки',
+  search: 'поиск',
 };

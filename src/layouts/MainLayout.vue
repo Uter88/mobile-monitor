@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, computed } from 'vue';
+import { defineComponent, onBeforeMount, computed, watch } from 'vue';
 import { useQuasar } from 'quasar';
 import TrackersList from 'src/components/trackers/TrackersList.vue';
 import { useStore } from 'src/store';
@@ -38,6 +38,11 @@ export default defineComponent({
     const $q = useQuasar();
     const store = useStore();
     const router = useRouter();
+    const group = computed(() => store.state.main.config.group);
+
+    const getData = () => {
+      void store.dispatch('trackers/getTrackers');
+    };
 
     const initApp = () => {
       i18n.global.locale = store.state.main.config.lang;
@@ -45,6 +50,8 @@ export default defineComponent({
         .dispatch('main/checkAuth')
         .then((u: User) => {
           if (u) {
+            void store.dispatch('main/getGroups');
+            getData();
           } else {
             void router.push('/login');
           }
@@ -55,6 +62,7 @@ export default defineComponent({
     };
 
     onBeforeMount(initApp);
+    watch(group, getData);
 
     const openPanel = () => {
       $q.dialog({ component: TrackersList });

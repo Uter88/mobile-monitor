@@ -7,6 +7,13 @@ export default {
   close: 'close',
   save: 'save',
   enter: 'enter',
+  exit: 'exit',
   objects: 'objects',
   events: 'events',
+  all_objects: 'All objects',
+  layers: 'layers',
+  center: 'center',
+  location: 'location',
+  traffic_jams: 'traffic jams',
+  search: 'search',
 };

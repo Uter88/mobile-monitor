@@ -1,4 +1,4 @@
-import { Config } from 'src/models/common';
+import { Config, Group } from 'src/models/common';
 import { User } from 'src/models/user';
 import { MutationTree } from 'vuex';
 import { MaineStateInterface } from './state';
@@ -19,6 +19,10 @@ const mutation: MutationTree<MaineStateInterface> = {
   },
   setZoom(state, zoom: number) {
     state.zoom = zoom;
+  },
+  setGroups(state, groups: Group[]) {
+    state.groups = groups.map((g) => new Group(g));
+    state.groups.push(Group.getDefault());
   },
 };
 

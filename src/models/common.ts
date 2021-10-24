@@ -1,12 +1,32 @@
 export class Group {
-  id: number;
-  name: string;
+  groupID: number;
+  groupName: string;
   time_offset: number;
+  default: boolean;
 
   constructor(g: Group) {
-    this.id = g.id || 0;
-    this.name = g.name;
+    this.groupID = g.groupID || 0;
+    this.groupName = g.groupName;
     this.time_offset = g.time_offset || 180;
+    this.default = g.default || false;
+  }
+
+  get label(): string {
+    return this.groupName;
+  }
+
+  get value(): number {
+    return this.groupID;
+  }
+
+  static getDefault(): Group {
+    const data = {
+      groupName: 'all_objects',
+      groupID: 0,
+      time_offset: new Date().getTimezoneOffset(),
+      default: true,
+    } as Group;
+    return new Group(data);
   }
 }
 
@@ -15,12 +35,16 @@ export class Config {
   trackers: number[];
   layer: string;
   lang: string;
+  view: string;
+  fab: number[];
 
   constructor(c: Config) {
     this.group = c.group || 0;
     this.trackers = c.trackers || [];
     this.layer = c.layer || 'OSM';
     this.lang = c.lang || 'en';
+    this.view = c.view || 'table';
+    this.fab = c.fab || [18, 18];
   }
 
   static load() {
@@ -40,6 +64,12 @@ export class Config {
     }
     if (c.lang) {
       this.lang = c.lang;
+    }
+    if (c.view) {
+      this.view = c.view;
+    }
+    if (c.fab) {
+      this.fab = c.fab;
     }
     localStorage.setItem('config', JSON.stringify(this));
   }

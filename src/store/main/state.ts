@@ -1,9 +1,10 @@
-import { Config } from 'src/models/common';
+import { Config, Group } from 'src/models/common';
 import { TileLayers } from 'src/models/map/common';
 import { User } from 'src/models/user';
 
 export interface MaineStateInterface {
   user: User | null;
+  groups: Group[];
   api: string;
   reports: string;
   geocode: string;
@@ -17,6 +18,7 @@ export interface MaineStateInterface {
 function state(): MaineStateInterface {
   return {
     user: null,
+    groups: [],
     api: process.env.DEBUGGING
       ? '/api/v1'
       : 'https://packapi.kgk-global.com/api/v1/',
