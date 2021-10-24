@@ -214,6 +214,11 @@ export class Tracker {
     return tm.toLocaleString('ru-RU');
   }
 
+  get getClass(): string {
+    if (this.isCurrent) return 'current';
+    return '';
+  }
+
   static create(u: User): Tracker {
     const data = {
       company_id: u.company_id,

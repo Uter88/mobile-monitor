@@ -1,7 +1,7 @@
 import { Tracker } from 'src/models/tracker/tracker';
 
 export interface TrackersStateInterface {
-  trackers: readonly Tracker[];
+  trackers: Tracker[];
   indexes: Record<number, number>;
   current: Tracker | null;
 }

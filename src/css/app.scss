@@ -101,3 +101,9 @@ html {
 .q-btn__content {
   transition: none;
 }
+
+.tracker {
+  &.current {
+    background: rgb(243, 241, 241)
+  }
+}

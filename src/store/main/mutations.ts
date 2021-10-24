@@ -14,8 +14,9 @@ const mutation: MutationTree<MaineStateInterface> = {
     sessionStorage.removeItem('token');
     state.user = null;
   },
-  setCenter(state, c: { lat: number; lng: number }) {
-    state.center = c;
+  setCenter(state, { lat, lng }: { lat: number; lng: number }) {
+    state.center.lat = lat;
+    state.center.lng = lng;
   },
   setZoom(state, zoom: number) {
     state.zoom = zoom;
