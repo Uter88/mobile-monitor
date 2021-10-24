@@ -2,22 +2,24 @@
   <q-dialog
     @update:model-value="$emit('update:model-value', $event)"
     v-bind="$props"
-    transition-show="fade"
-    transition-hide="slide-down"
+    :transition-show="transition_show"
+    :transition-hide="transition_hide"
     position="bottom"
     class="m-dialog"
+    :class="class_dialog"
   >
-    <div class="bg-white q-pa-xs fit">
+    <div class="bg-white q-pa-xs fit q-mt-md" v-touch-swipe.up.down="handleSwipe">
       <slot name="label">
-        <div class="row items-center justify-between">
-          <span class="wd-label">{{ label }}</span>
+        <div class="row items-center" :class="label ? 'justify-between' : 'justify-center'">
+          <span class="wd-label text-capitalize text-bold" v-if="label">{{ label }}</span>
           <MBtn
-            icon="close"
+            :icon="icon"
             flat
             text-color="black"
             v-close-popup
             @click="$emit('close')"
             :tooltip="$t('close')"
+            v-bind="MBtn"
           />
         </div>
       </slot>
@@ -48,6 +50,16 @@ export default defineComponent({
     closeLabel: {
       default: 'close',
     },
+    icon: {
+      default: 'eva-close',
+    },
+    icon_size: {
+      type: String,
+      default: '50px'
+    },
+    icon_class: {
+      type: String
+    },
     submit: {
       type: Boolean,
       default: true,
@@ -56,11 +68,29 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    transition_show: {
+      type: String,
+      default: 'fade'
+    },
+    transition_hide: {
+      type: String,
+      default: 'slide-down'
+    },
+    class_dialog: {
+      type: String,
+      default: 'with-b-radius'
+    },
     disable: Boolean,
+    MBtn: Object
   },
 
-  setup() {
-    return;
+  setup(props, { emit }) {
+    const handleSwipe = () => {
+      emit('update:model-value', false)
+    }
+    return{
+      handleSwipe
+    }
   },
 });
 </script>
