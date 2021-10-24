@@ -36,6 +36,7 @@ export class Config {
   layer: string;
   lang: string;
   view: string;
+  fab: number[];
 
   constructor(c: Config) {
     this.group = c.group || 0;
@@ -43,6 +44,7 @@ export class Config {
     this.layer = c.layer || 'OSM';
     this.lang = c.lang || 'en';
     this.view = c.view || 'table';
+    this.fab = c.fab || [18, 18];
   }
 
   static load() {
@@ -65,6 +67,9 @@ export class Config {
     }
     if (c.view) {
       this.view = c.view;
+    }
+    if (c.fab) {
+      this.fab = c.fab;
     }
     localStorage.setItem('config', JSON.stringify(this));
   }

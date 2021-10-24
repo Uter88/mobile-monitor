@@ -20,12 +20,12 @@
       />
       <FabAct
         act_color="purple"
-        :label="$t('traffic jams')"
+        :label="$t('traffic_jams')"
         act_icon="eva-speaker-outline"
       />
       <FabAct
         act_color="purple"
-        :label="$t('Exit')"
+        :label="$t('exit')"
         act_icon="eva-log-out-outline"
         @click="$router.push('/login')"
       />
@@ -34,23 +34,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed, watch } from 'vue';
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  computed,
+  watch,
+  reactive,
+} from 'vue';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useStore } from 'src/store';
 import { Tracker } from 'src/models/tracker/tracker';
 import Fab from 'src/components/buttons/Fab.vue';
-import FabAct from 'src/components/buttons/FabAct.vue';
+import FabAct from 'components/buttons/FabAct.vue';
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'Map',
   components: { Fab, FabAct },
   setup() {
     const map = ref<L.Map>();
-    const fabPos = ref([18, 18]);
     const store = useStore();
+    const $q = useQuasar();
     const getMap = () => map.value as L.Map;
     const trackersGroup = L.layerGroup();
+    const fabPos = reactive([18, 18]);
 
     const zoom = computed(() => store.state.main.zoom);
     const center = computed({
@@ -101,13 +110,14 @@ export default defineComponent({
       getMap().invalidateSize();
     };
 
-    const moveFab = (ev: any) => {
-      if (!ev) return;
-      console.log(ev);
-      fabPos.value = [
-        fabPos.value[0] - ev.delta.x,
-        fabPos.value[1] - ev.delta.y,
-      ];
+    const moveFab = (e: any) => {
+      if (!e) return;
+      const { left, top } = e.position as { left: number; top: number };
+      const { width, height } = $q.screen;
+      if (top - 30 < 0 || top + 50 > height) return;
+      if (left - 30 < 0 || left + 30 > width) return;
+      fabPos[0] -= e.delta.x;
+      fabPos[1] -= e.delta.y;
     };
 
     onMounted(initMap);
@@ -119,8 +129,13 @@ export default defineComponent({
       trackersGroup.clearLayers();
 
       for (let i = 0; i < tr.length; i++) {
-        const layer = tr[i].getMarker();
+        const t = tr[i];
+        const layer = t.getMarker();
         trackersGroup.addLayer(layer);
+
+        if (!store.state.trackers.current && t.is_active) {
+          store.commit('trackers/setCurrent', t);
+        }
       }
     });
 
