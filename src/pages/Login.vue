@@ -11,7 +11,11 @@
     "
     v-if="form"
   >
-    <q-icon name="img: icons/main/signal.svg" size="130px" class="animate-icon" />
+    <q-icon
+      name="img: icons/main/signal.svg"
+      size="130px"
+      class="animate-icon"
+    />
     <div class="column q-mt-xl full-width q-px-md q-gutter-y-lg">
       <q-input
         rounded
@@ -61,7 +65,7 @@
         label="Enter"
         size="lg"
         :disable="!getDisabled"
-        @click="$router.push('/')"
+        @click="login"
       />
       <q-btn
         push
@@ -91,11 +95,15 @@
 </template>
 
 <script lang="ts">
+import { useStore } from 'src/store';
+import { useRouter } from 'vue-router';
 import { defineComponent, reactive, ref, computed } from 'vue';
 
 export default defineComponent({
   name: 'Login',
   setup() {
+    const store = useStore();
+    const router = useRouter();
     const isPwd = ref(true);
     const form = reactive({
       remember_me: false,
@@ -108,10 +116,27 @@ export default defineComponent({
       }
       return false;
     });
+
+    const login = () => {
+      const token = 'Basic ' + btoa(form.login + ':' + form.password);
+
+      store
+        .dispatch('main/login', token)
+        .then(() => {
+          if (form.remember_me) localStorage.setItem('token', token);
+          sessionStorage.setItem('token', token);
+          void router.push('/');
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+
     return {
       form,
       isPwd,
       getDisabled,
+      login,
     };
   },
 });
@@ -127,20 +152,19 @@ export default defineComponent({
   box-shadow: 0 0 0 0 rgba(42,176,174, 1)
   animation: pulse-red 5s infinite
 
-@keyframes pulse-red 
-  0% 
+@keyframes pulse-red
+  0%
     transform: scale(0.95)
     box-shadow: 0 0 0 0 rgba(42,176,174, 0.7)
     background-position: 0% 50%
-  
-  70% 
+
+  70%
     transform: scale(1)
     box-shadow: 0 0 0 10px rgba(42,176,174, 0)
     background-position: 100% 50%
-  
-  100% 
+
+  100%
     transform: scale(0.95)
     box-shadow: 0 0 0 0 rgba(42,176,174, 0)
     background-position: 0% 50%
-
 </style>

@@ -85,7 +85,17 @@ module.exports = configure(function (ctx) {
     devServer: {
       https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        '/api/v1': {
+          target: 'https://packapi.kgk-global.com',
+          secure: false
+        },
+        '/api': {
+          target: 'https://agr-test.kgk-global.com',
+          secure: false
+        },
+      }
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework

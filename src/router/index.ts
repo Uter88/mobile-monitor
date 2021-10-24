@@ -20,7 +20,9 @@ import routes from './routes';
 export default route<StateInterface>(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
-    : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory);
+    : process.env.VUE_ROUTER_MODE === 'history'
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -33,6 +35,14 @@ export default route<StateInterface>(function (/* { store, ssrContext } */) {
       process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE
     ),
   });
+
+  /* Router.beforeEach((to, from, next) => {
+    if (to.name !== 'login' && !sessionStorage.getItem('token')) {
+      next('/login');
+    } else {
+      next();
+    }
+  }); */
 
   return Router;
 });

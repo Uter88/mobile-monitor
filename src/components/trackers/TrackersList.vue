@@ -1,14 +1,20 @@
 <template>
-  <MDialog v-model="visible"> test </MDialog>
+  <MDialog v-model="visible">
+    <q-select />
+  </MDialog>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { useStore } from 'src/store';
+import { defineComponent, ref, computed } from 'vue';
 
 export default defineComponent({
   name: 'TrackersList',
   setup() {
     const visible = ref(false);
+    const store = useStore();
+
+    const config = computed(() => store.state.main.config);
 
     const show = () => {
       visible.value = true;

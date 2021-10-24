@@ -7,10 +7,7 @@
     position="bottom"
     class="m-dialog"
   >
-    <div
-      class="bg-white q-pa-xs fit"
-      v-touch-swipe.mouse.right="$emit('update:model-value', false)"
-    >
+    <div class="bg-white q-pa-xs fit">
       <slot name="label">
         <div class="row items-center justify-between">
           <span class="wd-label">{{ label }}</span>

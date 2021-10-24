@@ -9,6 +9,10 @@ const getters: GetterTree<MaineStateInterface, StateInterface> = {
   getZoom(state) {
     return state.zoom;
   },
+  getApi: (state) => (path: string) => {
+    if (!path.startsWith('/')) path = '/' + path;
+    return state.api + path;
+  },
 };
 
 export default getters;

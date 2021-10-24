@@ -29,9 +29,14 @@ export default defineComponent({
 
     const initLayers = (m: L.Map) => {
       const tiles = L.control.layers();
+      const active = store.state.main.config.layer;
+
       for (const l of store.state.main.tileLayers) {
         const layer = L.tileLayer(l.url);
-        if (l.name === 'Google') layer.addTo(m);
+        layer.on('add', () => {
+          store.commit('main/updateConfig', { layer: l.name });
+        });
+        if (l.name === active) layer.addTo(m);
         tiles.addBaseLayer(layer, l.name);
       }
       tiles.addTo(m);
