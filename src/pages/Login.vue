@@ -21,9 +21,10 @@
         rounded
         standout="bg-transparent text-white"
         class="full-width"
-        label="Login"
+        :label="$t('Login')"
         clearable
         clear-icon="close"
+        label-color="black"
         autocomplete="off"
         no-error-icon
         @clear="() => (form.login = '')"
@@ -38,7 +39,8 @@
         autocomplete="off"
         standout="bg-transparent text-white"
         class="full-width"
-        label="Password"
+        :label="$t('Password')"
+        label-color="black"
         :type="isPwd ? 'password' : 'text'"
         no-error-icon
         v-model="form.password"
@@ -58,36 +60,42 @@
           />
         </template>
       </q-input>
-      <q-btn
+      <MBtn
+        color="teal-5"
         push
         rounded
-        color="teal-5"
-        label="Enter"
+        :label="$t('Enter')"
         size="lg"
         :disable="!getDisabled"
         @click="login"
       />
-      <q-btn
+      <MBtn
+        color="teal-5"
         push
         rounded
-        color="teal-5"
-        label="Demo"
+        :label="$t('Demo')"
         size="lg"
         type="password"
       />
       <div class="row justify-between full-width">
         <q-toggle
-          label="Remember me"
-          class="text-white text-uppercase text-black"
-          color="teal-5"
+          :label="$t('Remember me')"
+          class="text-black text-bold"
+          color="deep-orange-12"
           size="md"
           v-model="form.remember_me"
         />
-        <q-btn
+        <MBtn
+          color="transparent"
           flat
-          color="white"
-          class="text-black text-regular"
-          label="Need help?"
+          class_name="text-black text-bold text-hover"
+          :label="$t('Need help?')"
+          @click="visible = !visible"
+        />
+        <MDialog
+          v-model="visible"
+          icon="eva-arrow-ios-downward-outline"
+          :MBtn="{ size: 'xl' }"
         />
       </div>
     </div>
@@ -105,6 +113,7 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const isPwd = ref(true);
+    const visible = ref(false)
     const form = reactive({
       remember_me: false,
       password: '',
@@ -132,11 +141,21 @@ export default defineComponent({
         });
     };
 
+    const show = () => {
+      visible.value = true;
+    };
+
+    const hide = () => {
+      visible.value = false;
+    };
     return {
       form,
       isPwd,
       getDisabled,
       login,
+      visible,
+      show,
+      hide
     };
   },
 });

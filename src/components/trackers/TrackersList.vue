@@ -1,5 +1,5 @@
 <template>
-  <MDialog v-model="visible">
+  <MDialog v-model="visible" :label="$t('objects')">
     <div class="row q-gutter-md q-pa-sm">
       <q-select
         class="col"

@@ -1,22 +1,51 @@
 // app global css in SCSS form
+@font-face {
+  font-family: "Arimo-Regular";
+  src: url('/fonts/Arimo-Regular.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "Arimo-SemiBold";
+  src: url('/fonts/Arimo-SemiBold.ttf') format("truetype");
+}
 
 body,
 html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Arimo-Regular', sans-serif!important;
 }
 
 .text-bold {
-    font-weight: 600;
+  font-weight: 600;
+  font-family: 'Arimo-SemiBold', sans-serif!important;
 }
 
 .text-regular {
-    font-weight: 400;
+  font-weight: 400;
+  font-family: 'Arimo-Regular', sans-serif!important;
+}
+
+.text-hover:hover,
+.text-hover span:hover {
+  color: #ff3d00;
 }
 
 .font-14 {
-    font-size: 14px;
+  font-size: 14px;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.font-10 {
+  font-size: 10px;
+}
+
+.font-10-span.q-btn .block {
+  font-size: 10px!important;
 }
 
 .q-field--labeled .q-field__native,
@@ -44,4 +73,31 @@ html {
 
 .tfoot-sticky tr:first-child > * {
   bottom: 0
+}
+
+.with-b-radius {
+  & .q-dialog__inner--maximized>div {
+    border-radius: 10px 10px 0 0!important;
+  }
+}
+
+.leaflet-control-attribution {
+  display: none;
+}
+
+.q-toggle__label:hover {
+  color: #ff3d00;
+}
+
+.btn-group-content .q-btn__content {
+  display: flex!important;
+  flex-direction: column!important;
+  align-items: center!important;
+  justify-content: center!important;
+  flex-wrap: nowrap!important;
+  width: 100%!important;
+}
+
+.q-btn__content {
+  transition: none;
 }
