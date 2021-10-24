@@ -39,7 +39,7 @@ export default defineComponent({
     },
     label_class: {
       type: String,
-      default: 'font-12 text-bold'
+      default: 'font-12 text-bold bg-white text-black'
     },
   },
   setup() {

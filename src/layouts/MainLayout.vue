@@ -3,23 +3,19 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer class="bg-white" bordered>
+    <q-footer class="bg-deep-orange-12">
       <q-toolbar class="no-padding">
         <q-btn-group spread push class="fit">
-          <q-btn
-            dense
+          <MBtn
+            v-for="(btn, i) in footer_btns"
+            :key="i"
             flat
+            :icon="btn.icon"
+            :label="$t(btn.name)"
             text-color="black"
-            :label="$t('objects')"
-            icon="eva-car-outline" 
-            @click="openPanel"
-            class="font-10-span btn-group-content"
+            @click="getBtnFunct(btn.name)"
+            class_name="font-10-span btn-group-content text-bold bg-deep-orange-12"
           />
-          <q-btn dense flat text-color="black" :label="$t('events')" icon="eva-email-outline" class="font-10-span btn-group-content" />
-          <q-btn dense flat text-color="black" :label="$t('reports')" icon="eva-file-text-outline" class="font-10-span"/>
-          <q-btn dense flat text-color="black" :label="$t('profile')" icon="eva-person-outline" class="font-10-span"/>
-          <q-btn dense flat text-color="black" :label="$t('help')" icon="eva-question-mark-circle-outline" class="font-10-span btn-group-content"/>
-          <q-btn dense flat text-color="black" :label="$t('settings')" icon="eva-settings-2-outline" class="font-10-span" />
         </q-btn-group>
       </q-toolbar>
     </q-footer>
@@ -27,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount } from 'vue';
+import { defineComponent, onBeforeMount, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import TrackersList from 'src/components/trackers/TrackersList.vue';
 import { useStore } from 'src/store';
@@ -63,8 +59,47 @@ export default defineComponent({
     const openPanel = () => {
       $q.dialog({ component: TrackersList });
     };
+
+    const footer_btns = computed(() => {
+      const btns = []
+      btns.push(
+        {
+          name: 'devices',
+          icon: 'eva-car-outline'
+        },
+        {
+          name: 'events',
+          icon: 'eva-email-outline'
+        },
+        {
+          name: 'reports',
+          icon: 'eva-file-text-outline'
+        },
+        {
+          name: 'profile',
+          icon: 'eva-person-outline'
+        },
+        {
+          name: 'help',
+          icon: 'eva-question-mark-circle-outline'
+        },
+        {
+          name: 'settings',
+          icon: 'eva-settings-2-outline'
+        },
+      )
+      return btns
+    })
+    const getBtnFunct = (btn:any) => {
+      switch (btn) {
+        case 'devices':
+          return openPanel()
+      }
+    }
     return {
       openPanel,
+      footer_btns,
+      getBtnFunct
     };
   },
 });
