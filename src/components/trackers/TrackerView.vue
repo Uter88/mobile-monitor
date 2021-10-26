@@ -12,6 +12,7 @@
         @update:model-value="$emit('select', tracker)"
         dense
         size="sm"
+        color="teal-5"
       />
     </component>
     <component
@@ -19,15 +20,15 @@
       v-for="col in columns"
       :key="col.field"
     >
-      <span v-if="view === 'list'">
+      <div v-if="view === 'list'">
         {{ col.label ? $t(col.label) : '' }}
-      </span>
+      </div>
       <q-icon
         v-if="col.field === 'icon'"
         size="16pt"
         :name="'img:/' + getValue(col.field)"
       />
-      <span v-else>{{ getValue(col.field) }}</span>
+      <div v-else class="text-bold">{{ getValue(col.field) }}</div>
     </component>
   </component>
 </template>

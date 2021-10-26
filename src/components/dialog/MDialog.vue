@@ -11,7 +11,7 @@
     <div class="bg-white q-pa-xs fit q-mt-md" v-touch-swipe.up.down="handleSwipe">
       <slot name="label">
         <div class="row items-center" :class="label ? 'justify-between' : 'justify-center'">
-          <span class="wd-label text-capitalize text-bold" v-if="label">{{ label }}</span>
+          <span class="wd-label text-uppercase text-bold q-ml-sm" v-if="label">{{ label }}</span>
           <MBtn
             :icon="icon"
             flat

@@ -3,7 +3,7 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer class="bg-deep-orange-12">
+    <q-footer class="bg-white">
       <q-toolbar class="no-padding">
         <q-btn-group spread push class="fit">
           <MBtn
@@ -14,7 +14,7 @@
             :label="$t(btn.name)"
             text-color="black"
             @click="getBtnFunct(btn.name)"
-            class_name="font-10-span btn-group-content text-bold bg-deep-orange-12"
+            class_name="font-10-span btn-group-content text-bold bg-white"
           />
         </q-btn-group>
       </q-toolbar>
@@ -98,7 +98,7 @@ export default defineComponent({
       )
       return btns
     })
-    const getBtnFunct = (btn:any) => {
+    const getBtnFunct = (btn:string) => {
       switch (btn) {
         case 'devices':
           return openPanel()
