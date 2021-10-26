@@ -14,7 +14,7 @@
             :label="$t(btn.name)"
             text-color="black"
             @click="getBtnFunct(btn.name)"
-            class_name="font-10-span btn-group-content text-bold bg-white"
+            class_name="font-10-span btn-group-content text-bold bg-white text-capitalize"
           />
         </q-btn-group>
       </q-toolbar>
@@ -84,7 +84,7 @@ export default defineComponent({
           icon: 'eva-file-text-outline',
         },
         {
-          name: 'profile',
+          name: 'account',
           icon: 'eva-person-outline',
         },
         {

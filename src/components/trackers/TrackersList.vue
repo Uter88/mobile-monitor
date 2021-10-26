@@ -22,7 +22,7 @@
         checked-icon="list"
         unchecked-icon="eva-grid-outline"
         color="deep-orange-12"
-        :label="$t('View')"
+        :label="$t('view')"
       />
     </div>
     <q-virtual-scroll
@@ -36,7 +36,12 @@
         <thead class="thead-sticky text-left" v-if="view === 'table'">
           <q-tr>
             <q-th>
-              <q-checkbox v-model="selectAll" dense size="sm" color="deep-orange-12"/>
+              <q-checkbox
+                v-model="selectAll"
+                dense
+                size="sm"
+                color="deep-orange-12"
+              />
             </q-th>
             <q-th v-for="col in columns" :key="col.field">
               {{ $t(col.label) }}
@@ -45,7 +50,13 @@
         </thead>
         <q-item v-else class="thead-sticky">
           <q-item-section>
-            <q-toggle v-model="selectAll" dense size="sm" :label="$t('Select all')" class="text-bold text-no-wrap" color="deep-orange-12"/>
+            <q-toggle
+              v-model="selectAll"
+              dense size="sm"
+              :label="$t('select_all')"
+              class="text-bold text-no-wrap"
+              color="deep-orange-12"
+            />
           </q-item-section>
         </q-item>
       </template>

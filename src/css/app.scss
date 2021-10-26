@@ -118,10 +118,15 @@ td {
     color: black;
     transition: none!important;
     white-space: normal;
+    font-size: 12px;
+}
+
+.q-item__section--main+.q-item__section--main {
+    margin-left: 0;
 }
 
 .q-item__section--main {
-    flex: 0 10 15%!important;
+    // flex: 0 10 15%!important;
     min-width: 43px;
     //width: auto;
 }

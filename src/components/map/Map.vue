@@ -119,7 +119,7 @@ export default defineComponent({
       true
     );
 
-    const moveFab = (e: any) => {
+    const moveFab = (e: { position: { left: number; top: number; }; delta: { x: number; y: number; }; }) => {
       if (!e) return;
       const { left, top } = e.position as { left: number; top: number };
       const { width, height } = $q.screen;

@@ -8,9 +8,12 @@
     class="m-dialog"
     :class="class_dialog"
   >
-    <div class="bg-white q-pa-xs fit q-mt-md" v-touch-swipe.up.down="handleSwipe">
+    <div class="bg-white q-pa-xs fit q-mt-md" >
       <slot name="label">
-        <div class="row items-center" :class="label ? 'justify-between' : 'justify-center'">
+        <div class="row items-center"
+          :class="label ? 'justify-between' : 'justify-center'"
+          v-touch-swipe.up.down="handleSwipe"
+        >
           <span class="wd-label text-uppercase text-bold q-ml-sm" v-if="label">{{ label }}</span>
           <MBtn
             :icon="icon"
