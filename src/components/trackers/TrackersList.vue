@@ -20,6 +20,19 @@
         checked-icon="list"
         unchecked-icon="eva-grid-outline"
       />
+      <q-select
+        v-model="columns"
+        :options="allColumns"
+        dense
+        outlined
+        options-dense
+        option-value="field"
+        map-options
+        emit-value
+        multiple
+        hide-selected
+        :label="$t('columns')"
+      />
     </div>
     <q-virtual-scroll
       :type="view"
@@ -33,21 +46,26 @@
             <q-th>
               <q-checkbox v-model="selectAll" dense size="sm" />
             </q-th>
-            <q-th v-for="col in columns" :key="col.field">
-              {{ $t(col.label) }}
+            <q-th v-for="col in getColumns" :key="col.field">
+              {{ col.label ? $t(col.label) : '' }}
             </q-th>
           </q-tr>
         </thead>
         <q-item v-else class="thead-sticky">
           <q-item-section>
-            <q-toggle v-model="selectAll" dense size="sm" />
+            <q-toggle
+              v-model="selectAll"
+              dense
+              size="sm"
+              checked-icon="eva-done-all"
+            />
           </q-item-section>
         </q-item>
       </template>
       <template v-slot="{ item }">
         <TrackerView
           :tracker="item"
-          :columns="columns"
+          :columns="getColumns"
           :view="view"
           :selected="isSelected(item)"
           @select="select"
@@ -88,13 +106,20 @@ export default defineComponent({
       set: (trackers) => store.commit('main/updateConfig', { trackers }),
     });
 
-    const columns = computed(() => {
-      return [
-        { label: '', field: 'icon' },
-        { label: 'brand', field: 'brand' },
-        { label: 'model', field: 'model' },
-        { label: 'state_number', field: 'state_number' },
-      ];
+    const columns = computed({
+      get: () => store.state.main.config.columns,
+      set: (columns) => store.commit('main/updateConfig', { columns }),
+    });
+
+    const allColumns = [
+      { label: '', field: 'icon' },
+      { label: 'brand', field: 'brand' },
+      { label: 'model', field: 'model' },
+      { label: 'state_number', field: 'state_number' },
+    ];
+
+    const getColumns = computed(() => {
+      return allColumns.filter((c) => columns.value.indexOf(c.field) !== -1);
     });
 
     const show = () => {
@@ -166,6 +191,8 @@ export default defineComponent({
       view,
       trackers,
       columns,
+      getColumns,
+      allColumns,
       selected,
       selectAll,
     };

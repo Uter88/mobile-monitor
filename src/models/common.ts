@@ -37,6 +37,7 @@ export class Config {
   lang: string;
   view: string;
   fab: number[];
+  columns: string[];
 
   constructor(c: Config) {
     this.group = c.group || 0;
@@ -45,6 +46,7 @@ export class Config {
     this.lang = c.lang || 'en';
     this.view = c.view || 'table';
     this.fab = c.fab || [18, 18];
+    this.columns = c.columns || ['brand', 'model', 'state_number'];
   }
 
   static load() {
@@ -70,6 +72,9 @@ export class Config {
     }
     if (c.fab) {
       this.fab = c.fab;
+    }
+    if (c.columns) {
+      this.columns = c.columns;
     }
     localStorage.setItem('config', JSON.stringify(this));
   }

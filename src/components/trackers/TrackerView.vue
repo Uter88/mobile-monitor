@@ -15,6 +15,7 @@
         @update:model-value="$emit('select', tracker)"
         dense
         size="sm"
+        checked-icon="check"
       />
     </component>
     <component
@@ -37,7 +38,7 @@
 
 <script lang="ts">
 import { Tracker } from 'src/models/tracker/tracker';
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
   name: 'TrackerView',
@@ -47,7 +48,7 @@ export default defineComponent({
       required: true,
     },
     columns: {
-      type: Array,
+      type: Array as PropType<Array<Record<string, string>>>,
       default: () => [],
     },
     view: {
