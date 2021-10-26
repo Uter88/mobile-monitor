@@ -7,18 +7,22 @@
         :options="groups"
         emit-value
         map-options
+        color="deep-orange-12"
+        rounded
         outlined
         dense
         :option-label="(g) => (g.default ? $t(g.label) : g.label)"
       />
       <q-toggle
-        class="col-auto"
+        class="col-auto text-bold"
         dense
         v-model="view"
         true-value="list"
         false-value="table"
         checked-icon="list"
         unchecked-icon="eva-grid-outline"
+        color="deep-orange-12"
+        :label="$t('view')"
       />
       <q-select
         v-model="columns"
@@ -38,13 +42,19 @@
       :type="view"
       :items="trackers"
       style="max-height: 90vh"
-      class="flex-start"
+      class="flex-start text-no-wrap"
+      flat
     >
       <template v-slot:before>
         <thead class="thead-sticky text-left" v-if="view === 'table'">
           <q-tr>
             <q-th>
-              <q-checkbox v-model="selectAll" dense size="sm" />
+              <q-checkbox
+                v-model="selectAll"
+                dense
+                size="sm"
+                color="deep-orange-12"
+              />
             </q-th>
             <q-th v-for="col in getColumns" :key="col.field">
               {{ col.label ? $t(col.label) : '' }}
@@ -57,7 +67,9 @@
               v-model="selectAll"
               dense
               size="sm"
-              checked-icon="eva-done-all"
+              :label="$t('select_all')"
+              class="text-bold text-no-wrap"
+              color="deep-orange-12"
             />
           </q-item-section>
         </q-item>

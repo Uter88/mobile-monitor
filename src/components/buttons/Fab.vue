@@ -3,7 +3,7 @@
     :icon="fab_icon"
     :direction="fab_direction"
     :color="fab_color"
-    text-color="black"
+    text-color="white"
   >
     <slot/>
   </q-fab>

@@ -21,7 +21,7 @@
         rounded
         standout="bg-transparent text-white"
         class="full-width"
-        :label="$t('Login')"
+        :label="$t('login')"
         clearable
         clear-icon="close"
         label-color="black"
@@ -39,7 +39,7 @@
         autocomplete="off"
         standout="bg-transparent text-white"
         class="full-width"
-        :label="$t('Password')"
+        :label="$t('password')"
         label-color="black"
         :type="isPwd ? 'password' : 'text'"
         no-error-icon
@@ -64,23 +64,25 @@
         color="teal-5"
         push
         rounded
-        :label="$t('Enter')"
+        :label="$t('enter')"
         size="lg"
         :disable="!getDisabled"
         @click="login"
+        class="text-capitalize"
       />
       <MBtn
         color="teal-5"
         push
         rounded
-        :label="$t('Demo')"
+        :label="$t('demo')"
         size="lg"
         type="password"
+        class="text-capitalize"
       />
       <div class="row justify-between full-width">
         <q-toggle
-          :label="$t('Remember me')"
-          class="text-black text-bold"
+          :label="$t('remember_me')"
+          class="text-black text-bold text-capitalize"
           color="deep-orange-12"
           size="md"
           v-model="form.remember_me"
@@ -88,8 +90,8 @@
         <MBtn
           color="transparent"
           flat
-          class_name="text-black text-bold text-hover"
-          :label="$t('Need help?')"
+          class_name="text-black text-bold text-hover text-capitalize"
+          :label="$t('need_help')"
           @click="visible = !visible"
         />
         <MDialog
@@ -168,22 +170,22 @@ export default defineComponent({
   background: linear-gradient(#23d5ab, #63ACB0, #A0EACF)
   border-radius: 50%
   padding: 20px
-  box-shadow: 0 0 0 0 rgba(42,176,174, 1)
+  box-shadow: 0 0 0 0 rgba(245,235,245, 1)
   animation: pulse-red 5s infinite
 
 @keyframes pulse-red
   0%
     transform: scale(0.95)
-    box-shadow: 0 0 0 0 rgba(42,176,174, 0.7)
+    box-shadow: 0 0 0 0 rgba(245,235,245, 0.7)
     background-position: 0% 50%
 
   70%
     transform: scale(1)
-    box-shadow: 0 0 0 10px rgba(42,176,174, 0)
+    box-shadow: 0 0 0 10px rgba(245,235,245, 0)
     background-position: 100% 50%
 
   100%
     transform: scale(0.95)
-    box-shadow: 0 0 0 0 rgba(42,176,174, 0)
+    box-shadow: 0 0 0 0 rgba(245,235,245, 0)
     background-position: 0% 50%
 </style>

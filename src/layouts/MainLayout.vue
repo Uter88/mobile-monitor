@@ -3,7 +3,7 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer class="bg-deep-orange-12">
+    <q-footer class="bg-white">
       <q-toolbar class="no-padding">
         <q-btn-group spread push class="fit">
           <MBtn
@@ -14,7 +14,7 @@
             :label="$t(btn.name)"
             text-color="black"
             @click="getBtnFunct(btn.name)"
-            class_name="font-10-span btn-group-content text-bold bg-deep-orange-12"
+            class_name="font-10-span btn-group-content text-bold bg-white text-capitalize"
           />
         </q-btn-group>
       </q-toolbar>
@@ -84,7 +84,7 @@ export default defineComponent({
           icon: 'eva-file-text-outline',
         },
         {
-          name: 'profile',
+          name: 'account',
           icon: 'eva-person-outline',
         },
         {
@@ -93,12 +93,12 @@ export default defineComponent({
         },
         {
           name: 'settings',
-          icon: 'eva-settings-2-outline',
-        }
-      );
-      return btns;
-    });
-    const getBtnFunct = (btn: any) => {
+          icon: 'eva-settings-2-outline'
+        },
+      )
+      return btns
+    })
+    const getBtnFunct = (btn:string) => {
       switch (btn) {
         case 'devices':
           return openPanel();
