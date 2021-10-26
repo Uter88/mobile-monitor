@@ -12,12 +12,12 @@ const mutation: MutationTree<TrackersStateInterface> = {
       state.indexes[tr.device_id] = i;
       arr[i] = tr;
     }
-    state.trackers = Object.freeze(arr);
+    state.trackers = arr;
   },
   setCurrent(state, tr: Tracker) {
     state.current?.unsetCurrent();
-    state.current = tr;
     tr.setCurrent();
+    state.current = tr;
   },
 };
 

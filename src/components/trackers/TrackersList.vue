@@ -128,15 +128,24 @@ export default defineComponent({
       selected.value = arr;
     };
 
-    const activate = (e: Event, t: Tracker) => {
+    const activate = (e: { target: HTMLElement }, t: Tracker) => {
       if (!t.is_active) return;
       store.commit('trackers/setCurrent', t);
+      store.commit('main/setCenter', t.getCoords());
+
+      if (selected.value.indexOf(t.device_id) === -1) {
+        select(t);
+      }
     };
 
     const selectAll = computed({
       get: () => {
         if (!selected.value.length) return false;
-        if (selected.value.length === trackers.value.length) return true;
+        if (
+          selected.value.length ===
+          trackers.value.filter((t) => t.is_active).length
+        )
+          return true;
         return null;
       },
       set: (val) => {

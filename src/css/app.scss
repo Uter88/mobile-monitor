@@ -125,3 +125,9 @@ td {
     min-width: 43px;
     //width: auto;
 }
+
+.tracker {
+    &.current {
+        background: rgb(243, 241, 241)
+    }
+}

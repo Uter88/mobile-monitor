@@ -3,6 +3,9 @@
     :is="view === 'table' ? 'q-tr' : 'q-item'"
     @click="$emit('activate', $event, tracker)"
     @mouseover="$emit('hover', $event, tracker)"
+    class="cursor-pointer tracker"
+    clickable
+    :class="tracker.getClass"
   >
     <component :is="view === 'table' ? 'q-td' : 'q-item-section'">
       <component

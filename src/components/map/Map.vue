@@ -48,7 +48,7 @@ import { useStore } from 'src/store';
 import { Tracker } from 'src/models/tracker/tracker';
 import Fab from 'src/components/buttons/Fab.vue';
 import FabAct from 'components/buttons/FabAct.vue';
-import { useQuasar } from 'quasar';
+import { debounce, useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'Map',
@@ -61,7 +61,11 @@ export default defineComponent({
     const trackersGroup = L.layerGroup();
     const fabPos = reactive([18, 18]);
 
-    const zoom = computed(() => store.state.main.zoom);
+    const zoom = computed({
+      get: () => store.state.main.zoom,
+      set: (z) => store.commit('main/setZoom', z),
+    });
+
     const center = computed({
       get: () => store.state.main.center,
       set: (c) => store.commit('main/setCenter', c),
@@ -74,7 +78,8 @@ export default defineComponent({
     const initMap = () => {
       void store.dispatch('main/getPosition');
       const m = L.map('map', { renderer: L.canvas(), zoomControl: false });
-      m.setView(center.value, zoom.value);
+      const { lat, lng } = center.value;
+      m.setView({ lat, lng }, zoom.value);
       trackersGroup.addTo(m);
       map.value = m;
       initLayers(m);
@@ -98,23 +103,27 @@ export default defineComponent({
 
     const initEvents = (m: L.Map) => {
       m.on('zoom', () => {
-        store.commit('main/setZoom', m.getZoom());
+        zoom.value = m.getZoom();
         resize();
       });
       m.on('drag', () => {
-        store.commit('main/setCenter', m.getCenter());
+        center.value = m.getCenter();
       });
     };
 
-    const resize = () => {
-      getMap().invalidateSize();
-    };
+    const resize = debounce(
+      () => {
+        getMap().invalidateSize();
+      },
+      300,
+      true
+    );
 
     const moveFab = (e: any) => {
       if (!e) return;
       const { left, top } = e.position as { left: number; top: number };
       const { width, height } = $q.screen;
-      if (top - 30 < 0 || top + 50 > height) return;
+      if (top - 30 < 0 || top + 100 > height) return;
       if (left - 30 < 0 || left + 30 > width) return;
       fabPos[0] -= e.delta.x;
       fabPos[1] -= e.delta.y;
@@ -123,7 +132,7 @@ export default defineComponent({
     onMounted(initMap);
 
     watch(zoom, (z) => getMap().setZoom(z));
-    watch(center, (c) => getMap().setView(c));
+    watch(center, (c) => getMap().setView(c), { deep: true });
 
     watch(trackers, (tr) => {
       trackersGroup.clearLayers();
@@ -135,6 +144,7 @@ export default defineComponent({
 
         if (!store.state.trackers.current && t.is_active) {
           store.commit('trackers/setCurrent', t);
+          center.value = t.getCoords();
         }
       }
     });

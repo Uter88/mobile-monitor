@@ -69,27 +69,27 @@ export default defineComponent({
     };
 
     const footer_btns = computed(() => {
-      const btns = []
+      const btns = [];
       btns.push(
         {
           name: 'devices',
-          icon: 'eva-car-outline'
+          icon: 'eva-car-outline',
         },
         {
           name: 'events',
-          icon: 'eva-email-outline'
+          icon: 'eva-email-outline',
         },
         {
           name: 'reports',
-          icon: 'eva-file-text-outline'
+          icon: 'eva-file-text-outline',
         },
         {
           name: 'profile',
-          icon: 'eva-person-outline'
+          icon: 'eva-person-outline',
         },
         {
           name: 'help',
-          icon: 'eva-question-mark-circle-outline'
+          icon: 'eva-question-mark-circle-outline',
         },
         {
           name: 'settings',
@@ -101,13 +101,13 @@ export default defineComponent({
     const getBtnFunct = (btn:string) => {
       switch (btn) {
         case 'devices':
-          return openPanel()
+          return openPanel();
       }
-    }
+    };
     return {
       openPanel,
       footer_btns,
-      getBtnFunct
+      getBtnFunct,
     };
   },
 });
