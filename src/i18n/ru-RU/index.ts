@@ -15,7 +15,7 @@ export default {
   search: 'поиск',
   view: 'вид',
   select_all: 'выбрать все',
-  icon: 'иконка',
+  icon: 'маячок',
   brand: 'марка',
   model: 'модель',
   state_number: 'госномер',
@@ -28,5 +28,5 @@ export default {
   password: 'пароль',
   demo: 'демо',
   remember_me: 'запомнить меня',
-  need_help: 'нужна помощь?'
+  need_help: 'нужна помощь?',
 };

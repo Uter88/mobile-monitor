@@ -13,30 +13,37 @@
         dense
         :option-label="(g) => (g.default ? $t(g.label) : g.label)"
       />
-      <q-toggle
-        class="col-auto text-bold"
-        dense
-        v-model="view"
-        true-value="list"
-        false-value="table"
-        checked-icon="list"
-        unchecked-icon="eva-grid-outline"
-        color="deep-orange-12"
-        :label="$t('view')"
-      />
       <q-select
         v-model="columns"
         :options="allColumns"
         dense
         outlined
-        options-dense
         option-value="field"
+        :option-label="(c) => $t(c.label)"
         map-options
         emit-value
         multiple
         hide-selected
         :label="$t('columns')"
-      />
+        popup-content-class="q-py-sm"
+      >
+        <template v-slot:before-options>
+          <div class="q-pa-sm">
+            <q-toggle
+              class="text-bold"
+              dense
+              size="xs"
+              v-model="view"
+              true-value="list"
+              false-value="table"
+              checked-icon="list"
+              unchecked-icon="eva-grid-outline"
+              color="deep-orange-12"
+              :label="$t(view)"
+            />
+          </div>
+        </template>
+      </q-select>
     </div>
     <q-virtual-scroll
       :type="view"
@@ -124,7 +131,7 @@ export default defineComponent({
     });
 
     const allColumns = [
-      { label: '', field: 'icon' },
+      { label: 'icon', field: 'icon' },
       { label: 'brand', field: 'brand' },
       { label: 'model', field: 'model' },
       { label: 'state_number', field: 'state_number' },

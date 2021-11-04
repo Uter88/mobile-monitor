@@ -1,3 +1,5 @@
+import { i18n } from 'src/boot/i18n';
+
 export class Group {
   groupID: number;
   groupName: string;
@@ -40,10 +42,21 @@ export class Config {
   columns: string[];
 
   constructor(c: Config) {
+    if (this.checkLocale(c.lang)) {
+      this.lang = c.lang;
+    } else {
+      const lang = navigator.language;
+      if (this.checkLocale(lang)) {
+        this.lang = lang;
+      } else {
+        this.lang = 'en-US';
+      }
+    }
+    i18n.global.locale = this.lang;
+
     this.group = c.group || 0;
     this.trackers = c.trackers || [];
     this.layer = c.layer || 'OSM';
-    this.lang = c.lang || 'en';
     this.view = c.view || 'table';
     this.fab = c.fab || [18, 18];
     this.columns = c.columns || ['brand', 'model', 'state_number'];
@@ -52,6 +65,10 @@ export class Config {
   static load() {
     const cfg = JSON.parse(localStorage.getItem('config') || '{}') as Config;
     return new Config(cfg);
+  }
+
+  checkLocale(loc: string): boolean {
+    return i18n.global.availableLocales.indexOf(loc) !== -1;
   }
 
   update(c: Config) {

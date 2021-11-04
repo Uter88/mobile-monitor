@@ -142,6 +142,10 @@ export default defineComponent({
         const layer = t.getMarker();
         trackersGroup.addLayer(layer);
 
+        layer.on('click', () => {
+          store.commit('trackers/setCurrent', t)
+        })
+
         if (!store.state.trackers.current && t.is_active) {
           store.commit('trackers/setCurrent', t);
           center.value = t.getCoords();

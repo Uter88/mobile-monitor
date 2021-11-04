@@ -29,7 +29,6 @@ import TrackersList from 'src/components/trackers/TrackersList.vue';
 import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 import { User } from 'src/models/user';
-import { i18n } from 'src/boot/i18n';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -45,7 +44,6 @@ export default defineComponent({
     };
 
     const initApp = () => {
-      i18n.global.locale = store.state.main.config.lang;
       store
         .dispatch('main/checkAuth')
         .then((u: User) => {
@@ -93,12 +91,12 @@ export default defineComponent({
         },
         {
           name: 'settings',
-          icon: 'eva-settings-2-outline'
-        },
-      )
-      return btns
-    })
-    const getBtnFunct = (btn:string) => {
+          icon: 'eva-settings-2-outline',
+        }
+      );
+      return btns;
+    });
+    const getBtnFunct = (btn: string) => {
       switch (btn) {
         case 'devices':
           return openPanel();
