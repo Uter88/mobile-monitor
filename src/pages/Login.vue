@@ -108,10 +108,12 @@
 import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 import { defineComponent, reactive, ref, computed } from 'vue';
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: 'Login',
   setup() {
+    const $q = useQuasar()
     const store = useStore();
     const router = useRouter();
     const isPwd = ref(true);
@@ -140,6 +142,16 @@ export default defineComponent({
         })
         .catch((e) => {
           console.log(e);
+          $q.notify({
+            message: e,
+            html: true,
+            type: 'negative',
+            position: 'center',
+            timeout: 1500,
+            color: 'white',
+            textColor: 'deep-orange',
+            classes: 'text-bold'            
+          })
         });
     };
 
