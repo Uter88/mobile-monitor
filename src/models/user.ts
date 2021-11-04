@@ -73,4 +73,8 @@ export class User {
       this.acl = JSON.parse(this.acl) as number[];
     }
   }
+
+  getToken() {
+    return `${this.login}:${this.password}`;
+  }
 }

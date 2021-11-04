@@ -49,6 +49,7 @@ import { Tracker } from 'src/models/tracker/tracker';
 import Fab from 'src/components/buttons/Fab.vue';
 import FabAct from 'components/buttons/FabAct.vue';
 import { debounce, useQuasar } from 'quasar';
+import { ReportEvent } from 'src/models/reports/common';
 
 export default defineComponent({
   name: 'Map',
@@ -59,6 +60,8 @@ export default defineComponent({
     const $q = useQuasar();
     const getMap = () => map.value as L.Map;
     const trackersGroup = L.layerGroup();
+    const trackGroup = L.layerGroup();
+    const eventsGroup = L.layerGroup();
     const fabPos = reactive([18, 18]);
 
     const zoom = computed({
@@ -67,20 +70,30 @@ export default defineComponent({
     });
 
     const center = computed({
-      get: () => store.state.main.center,
+      get: () => store.getters['main/getCenter'] as L.LatLng,
       set: (c) => store.commit('main/setCenter', c),
     });
 
     const trackers = computed(
-      () => store.getters['trackers/getSelectedTrackers'] as Tracker[]
+      () => store.getters['trackers/getSelected'] as Tracker[]
+    );
+
+    const track = computed(() => store.state.reports.track);
+    const events = computed(
+      () => store.getters['reports/getEvents'] as ReportEvent[]
     );
 
     const initMap = () => {
       void store.dispatch('main/getPosition');
-      const m = L.map('map', { renderer: L.canvas(), zoomControl: false });
+      const m = L.map('map', {
+        renderer: L.canvas(),
+        zoomControl: false,
+      });
       const { lat, lng } = center.value;
       m.setView({ lat, lng }, zoom.value);
       trackersGroup.addTo(m);
+      trackGroup.addTo(m);
+      eventsGroup.addTo(m);
       map.value = m;
       initLayers(m);
       initEvents(m);
@@ -106,9 +119,6 @@ export default defineComponent({
         zoom.value = m.getZoom();
         resize();
       });
-      m.on('drag', () => {
-        center.value = m.getCenter();
-      });
     };
 
     const resize = debounce(
@@ -119,7 +129,10 @@ export default defineComponent({
       true
     );
 
-    const moveFab = (e: { position: { left: number; top: number; }; delta: { x: number; y: number; }; }) => {
+    const moveFab = (e: {
+      position: { left: number; top: number };
+      delta: { x: number; y: number };
+    }) => {
       if (!e) return;
       const { left, top } = e.position as { left: number; top: number };
       const { width, height } = $q.screen;
@@ -143,13 +156,28 @@ export default defineComponent({
         trackersGroup.addLayer(layer);
 
         layer.on('click', () => {
-          store.commit('trackers/setCurrent', t)
-        })
+          store.commit('trackers/setCurrent', t);
+        });
 
         if (!store.state.trackers.current && t.is_active) {
           store.commit('trackers/setCurrent', t);
-          center.value = t.getCoords();
         }
+      }
+    });
+
+    watch(track, (t) => {
+      trackGroup.clearLayers();
+      const layer = L.polyline(t);
+      trackGroup.addLayer(layer);
+    });
+
+    watch(events, (evs) => {
+      eventsGroup.clearLayers();
+      for (const e of evs) {
+        const m = L.marker(e, {
+          icon: L.icon({ iconUrl: e.getIcon(), iconSize: [18, 18] }),
+        });
+        eventsGroup.addLayer(m);
       }
     });
 

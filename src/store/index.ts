@@ -10,6 +10,8 @@ import main from './main';
 import { MaineStateInterface } from './main/state';
 import trackers from './trackers';
 import { TrackersStateInterface } from './trackers/state';
+import reports from './reports';
+import { ReportsStateInterface } from './reports/state';
 
 /*
  * If not building with SSR mode, you can
@@ -26,6 +28,7 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   main: MaineStateInterface;
   trackers: TrackersStateInterface;
+  reports: ReportsStateInterface;
 }
 
 // provide typings for `this.$store`
@@ -44,6 +47,7 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       main,
       trackers,
+      reports,
     },
 
     // enable strict mode (adds overhead!)

@@ -13,7 +13,7 @@
             :icon="btn.icon"
             :label="$t(btn.name)"
             text-color="black"
-            @click="getBtnFunct(btn.name)"
+            @click="btn.handler"
             class_name="font-10-span btn-group-content text-bold bg-white text-capitalize"
           />
         </q-btn-group>
@@ -25,7 +25,8 @@
 <script lang="ts">
 import { defineComponent, onBeforeMount, computed, watch } from 'vue';
 import { useQuasar } from 'quasar';
-import TrackersList from 'src/components/trackers/TrackersList.vue';
+import TrackersList from 'components/trackers/TrackersList.vue';
+import ReportsList from 'components/reports/ReportsList.vue';
 import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 import { User } from 'src/models/user';
@@ -62,50 +63,44 @@ export default defineComponent({
     onBeforeMount(initApp);
     watch(group, getData);
 
-    const openPanel = () => {
-      $q.dialog({ component: TrackersList });
-    };
-
     const footer_btns = computed(() => {
       const btns = [];
       btns.push(
         {
           name: 'devices',
           icon: 'eva-car-outline',
+          handler: () => $q.dialog({ component: TrackersList }),
         },
         {
           name: 'events',
           icon: 'eva-email-outline',
+          handler: () => null,
         },
         {
           name: 'reports',
           icon: 'eva-file-text-outline',
+          handler: () => $q.dialog({ component: ReportsList }),
         },
         {
           name: 'account',
           icon: 'eva-person-outline',
+          handler: () => null,
         },
         {
           name: 'help',
           icon: 'eva-question-mark-circle-outline',
+          handler: () => null,
         },
         {
           name: 'settings',
           icon: 'eva-settings-2-outline',
+          handler: () => null,
         }
       );
       return btns;
     });
-    const getBtnFunct = (btn: string) => {
-      switch (btn) {
-        case 'devices':
-          return openPanel();
-      }
-    };
     return {
-      openPanel,
       footer_btns,
-      getBtnFunct,
     };
   },
 });

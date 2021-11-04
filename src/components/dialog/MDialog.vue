@@ -2,19 +2,28 @@
   <q-dialog
     @update:model-value="$emit('update:model-value', $event)"
     v-bind="$props"
-    :transition-show="transition_show"
-    :transition-hide="transition_hide"
+    :transition-show="transitionShow"
+    :transition-hide="transitionHide"
     position="bottom"
     class="m-dialog"
-    :class="class_dialog"
+    :class="classDialog"
   >
-    <div class="bg-white q-pa-xs fit q-mt-md" >
+    <div
+      class="bg-white q-pa-xs q-mt-md"
+      :class="contentClass"
+      :style="contentStyle"
+    >
       <slot name="label">
-        <div class="row items-center"
+        <div
+          class="row items-center"
           :class="label ? 'justify-between' : 'justify-center'"
           v-touch-swipe.up.down="handleSwipe"
         >
-          <span class="wd-label text-uppercase text-bold q-ml-sm" v-if="label">{{ label }}</span>
+          <span
+            class="wd-label text-uppercase text-bold q-ml-sm"
+            v-if="label"
+            >{{ label }}</span
+          >
           <MBtn
             :icon="icon"
             flat
@@ -58,10 +67,10 @@ export default defineComponent({
     },
     icon_size: {
       type: String,
-      default: '50px'
+      default: '50px',
     },
     icon_class: {
-      type: String
+      type: String,
     },
     submit: {
       type: Boolean,
@@ -71,29 +80,31 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    transition_show: {
+    transitionShow: {
       type: String,
-      default: 'fade'
+      default: 'fade',
     },
-    transition_hide: {
+    transitionHide: {
       type: String,
-      default: 'slide-down'
+      default: 'slide-down',
     },
-    class_dialog: {
+    classDialog: {
       type: String,
-      default: 'with-b-radius'
+      default: 'with-b-radius',
     },
+    contentClass: String,
+    contentStyle: String,
     disable: Boolean,
-    MBtn: Object
+    MBtn: Object,
   },
 
   setup(props, { emit }) {
     const handleSwipe = () => {
-      emit('update:model-value', false)
-    }
-    return{
-      handleSwipe
-    }
+      emit('update:model-value', false);
+    };
+    return {
+      handleSwipe,
+    };
   },
 });
 </script>

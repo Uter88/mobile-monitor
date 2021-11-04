@@ -3,7 +3,7 @@ import { StateInterface } from '../index';
 import { TrackersStateInterface } from './state';
 
 const getters: GetterTree<TrackersStateInterface, StateInterface> = {
-  getSelectedTrackers(state, getters, rootState) {
+  getSelected(state, getters, rootState) {
     const selected = rootState.main.config.trackers;
     const result = [];
 

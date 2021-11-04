@@ -141,7 +141,7 @@ export class Tracker {
   }
 
   selectOnMap(): void {
-    this.getMarker().getElement()?.classList.add('current')
+    this.getMarker().getElement()?.classList.add('current');
     this.openToolTip();
   }
 
@@ -151,11 +151,11 @@ export class Tracker {
 
   setCurrent() {
     this._isCurrent = true;
-    this.selectOnMap()
+    this.selectOnMap();
   }
 
   unsetCurrent() {
-    this.getMarker().getElement()?.classList.remove('current')
+    this.getMarker().getElement()?.classList.remove('current');
     this._isCurrent = false;
   }
 
