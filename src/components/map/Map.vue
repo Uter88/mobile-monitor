@@ -1,7 +1,7 @@
 <template>
   <div id="map" class="fit absolute"></div>
   <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 401">
-    <Fab v-touch-pan.prevent.mouse="moveFab">
+    <Fab v-touch-pan.prevent.mouse="moveFab" :fab_icon="'apps'">
       <FabAct act_color="purple" :label="$t('search')" act_icon="eva-search" />
       <FabAct
         act_color="purple"
@@ -101,6 +101,7 @@ export default defineComponent({
 
     const initLayers = (m: L.Map) => {
       const tiles = L.control.layers();
+      tiles.setPosition('bottomleft')
       const active = store.state.main.config.layer;
 
       for (const l of store.state.main.tileLayers) {

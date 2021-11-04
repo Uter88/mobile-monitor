@@ -4,12 +4,12 @@
     v-bind="$props"
     :transition-show="transitionShow"
     :transition-hide="transitionHide"
-    position="bottom"
+    :position="position"
     class="m-dialog"
     :class="classDialog"
   >
     <div
-      class="bg-white q-pa-xs q-mt-md"
+      class="bg-white q-pa-xs relative-position column"
       :class="contentClass"
       :style="contentStyle"
     >
@@ -32,11 +32,14 @@
             @click="$emit('close')"
             :tooltip="$t('close')"
             v-bind="MBtn"
+            v-if="position === 'bottom'"
           />
         </div>
       </slot>
       <slot name="default"> </slot>
-      <slot name="footer"> </slot>
+      <div class="absolute-bottom full-width text-center">
+        <slot name="footer"> </slot>
+      </div>
     </div>
   </q-dialog>
 </template>
@@ -88,11 +91,18 @@ export default defineComponent({
       type: String,
       default: 'slide-down',
     },
+    position: {
+      type: String,
+      default: 'bottom',
+    },
     classDialog: {
       type: String,
       default: 'with-b-radius',
     },
-    contentClass: String,
+    contentClass: {
+      type: String,
+      default: 'q-mt-md',
+    },
     contentStyle: String,
     disable: Boolean,
     MBtn: Object,

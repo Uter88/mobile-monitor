@@ -3,7 +3,6 @@
     seamless
     v-model="visible"
     :label="getLabel"
-    :maximized="false"
     full-width
     content-class="self-end"
     content-style="height: 30vh;"

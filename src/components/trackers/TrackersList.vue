@@ -12,12 +12,15 @@
         outlined
         dense
         :option-label="(g) => (g.default ? $t(g.label) : g.label)"
+        popup-content-class="text-bold"
       />
       <q-select
         v-model="columns"
         :options="allColumns"
         dense
         outlined
+        rounded
+        color="deep-orange-12"
         option-value="field"
         :option-label="(c) => $t(c.label)"
         map-options
@@ -25,7 +28,7 @@
         multiple
         hide-selected
         :label="$t('columns')"
-        popup-content-class="q-py-sm"
+        popup-content-class="text-bold"
       >
         <template v-slot:before-options>
           <div class="q-pa-sm">

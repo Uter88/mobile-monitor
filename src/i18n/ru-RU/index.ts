@@ -9,7 +9,7 @@ export default {
   events: 'события',
   all_objects: 'Все объекты',
   layers: 'слои',
-  center: 'центр',
+  center: 'центрирование',
   location: 'местоположение',
   traffic_jams: 'пробки',
   search: 'поиск',
@@ -27,6 +27,7 @@ export default {
   login: 'логин',
   password: 'пароль',
   demo: 'демо',
-  remember_me: 'запомнить меня',
-  need_help: 'нужна помощь?',
+  remember_me: 'Запомнить меня',
+  need_help: 'Нужна помощь?',
+  notifies: 'уведомления'
 };

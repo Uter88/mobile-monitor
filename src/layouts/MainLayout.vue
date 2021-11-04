@@ -1,5 +1,18 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <q-header class="bg-white">
+      <q-toolbar class="no-padding shadow-1 row justify-center">
+        <MBtn
+          icon="eva-arrow-ios-downward-outline"
+          size="20px"
+          flat
+          text-color="black"
+          dense
+          class="self-end justify-center"
+          @click="openActiveTracker"
+        />
+      </q-toolbar>
+    </q-header>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -25,8 +38,9 @@
 <script lang="ts">
 import { defineComponent, onBeforeMount, computed, watch } from 'vue';
 import { useQuasar } from 'quasar';
-import TrackersList from 'components/trackers/TrackersList.vue';
 import ReportsList from 'components/reports/ReportsList.vue';
+import TrackersList from 'src/components/trackers/TrackersList.vue';
+import ActiveTracker from 'src/components/trackers/ActiveTracker.vue';
 import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 import { User } from 'src/models/user';
@@ -63,6 +77,10 @@ export default defineComponent({
     onBeforeMount(initApp);
     watch(group, getData);
 
+    const openActiveTracker = () => {
+      $q.dialog({ component: ActiveTracker });
+    };
+
     const footer_btns = computed(() => {
       const btns = [];
       btns.push(
@@ -73,18 +91,18 @@ export default defineComponent({
         },
         {
           name: 'events',
-          icon: 'eva-email-outline',
+          icon: 'send',
           handler: () => null,
         },
         {
           name: 'reports',
-          icon: 'eva-file-text-outline',
+          icon: 'trending_up',
           handler: () => $q.dialog({ component: ReportsList }),
         },
         {
           name: 'account',
-          icon: 'eva-person-outline',
           handler: () => null,
+          icon: 'perm_identity',
         },
         {
           name: 'help',
@@ -93,7 +111,7 @@ export default defineComponent({
         },
         {
           name: 'settings',
-          icon: 'eva-settings-2-outline',
+          icon: 'manage_accounts',
           handler: () => null,
         }
       );
@@ -101,6 +119,7 @@ export default defineComponent({
     });
     return {
       footer_btns,
+      openActiveTracker,
     };
   },
 });
