@@ -10,8 +10,7 @@
   >
     <div
       class="bg-white q-pa-xs fit relative-position"
-      :class="position === 'bottom' ? 'q-mt-md' : ''"
-      style="max-height: 40%"
+      :class="position === 'bottom' ? 'q-mt-md' : 'max-height-dialog'"
     >
       <slot name="label">
         <div class="row items-center"
