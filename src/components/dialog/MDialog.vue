@@ -4,11 +4,15 @@
     v-bind="$props"
     :transition-show="transition_show"
     :transition-hide="transition_hide"
-    position="bottom"
+    :position="position"
     class="m-dialog"
     :class="class_dialog"
   >
-    <div class="bg-white q-pa-xs fit q-mt-md" >
+    <div
+      class="bg-white q-pa-xs fit relative-position"
+      :class="position === 'bottom' ? 'q-mt-md' : ''"
+      style="max-height: 40%"
+    >
       <slot name="label">
         <div class="row items-center"
           :class="label ? 'justify-between' : 'justify-center'"
@@ -23,11 +27,25 @@
             @click="$emit('close')"
             :tooltip="$t('close')"
             v-bind="MBtn"
+            v-if="position === 'bottom'"
           />
         </div>
       </slot>
       <slot name="default"> </slot>
-      <slot name="footer"> </slot>
+      <slot name="footer">
+        <div class="fit column justify-end self-center"> 
+          <MBtn
+            icon="keyboard_arrow_up"
+            flat
+            text-color="black"
+            v-close-popup
+            @click="$emit('close')"
+            :tooltip="$t('close')"
+            v-bind="MBtn"
+            v-if="position === 'top'"
+          />
+        </div>
+      </slot>
     </div>
   </q-dialog>
 </template>
@@ -78,6 +96,10 @@ export default defineComponent({
     transition_hide: {
       type: String,
       default: 'slide-down'
+    },
+    position: {
+      type: String,
+      default: 'bottom'
     },
     class_dialog: {
       type: String,

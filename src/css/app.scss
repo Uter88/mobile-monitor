@@ -1,154 +1,169 @@
 // app global css in SCSS form
 @font-face {
-  font-family: "Arimo-Regular";
-  src: url('/fonts/Arimo-Regular.ttf') format("truetype");
+    font-family: "Arimo-Regular";
+    src: url('/fonts/Arimo-Regular.ttf') format("truetype");
 }
 
 @font-face {
-  font-family: "Arimo-SemiBold";
-  src: url('/fonts/Arimo-SemiBold.ttf') format("truetype");
+    font-family: "Arimo-SemiBold";
+    src: url('/fonts/Arimo-SemiBold.ttf') format("truetype");
 }
 
 body,
 html {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Arimo-Regular', sans-serif!important;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Arimo-Regular', sans-serif!important;
 }
 
 .text-bold {
-  font-weight: 600;
-  font-family: 'Arimo-SemiBold', sans-serif!important;
+    font-weight: 600;
+    font-family: 'Arimo-SemiBold', sans-serif!important;
 }
 
 .text-regular {
-  font-weight: 400;
-  font-family: 'Arimo-Regular', sans-serif!important;
+    font-weight: 400;
+    font-family: 'Arimo-Regular', sans-serif!important;
 }
 
 .text-hover:hover,
 .text-hover span:hover {
-  color: #ff3d00;
+    color: #ff3d00;
 }
 
 .space-normal {
-  white-space: normal;
+    white-space: normal;
+}
+
+.font-16 {
+    font-size: 16px;
 }
 
 .font-14 {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .font-12 {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .font-10 {
-  font-size: 10px;
+    font-size: 10px;
+}
+
+.font-12-span.q-btn .block {
+    font-size: 12px!important;
 }
 
 .font-10-span.q-btn .block {
-  font-size: 12px!important;
+    font-size: 10px!important;
 }
 
 .q-field--labeled .q-field__native,
 .q-field--labeled .q-field__prefix,
 .q-field--labeled .q-field__suffix {
-  font-size: 18px;
+    font-size: 18px;
 }
 
 .m-dialog {
-  .q-dialog__inner {
-      height: 100%;
-  }
+    .q-dialog__inner {
+        height: 100%;
+    }
 }
 
 th,
 td {
-  font-size: 12px!important;
+    font-size: 12px!important;
 }
 
 .thead-sticky tr>*,
 .tfoot-sticky tr>* {
-  position: sticky;
-  opacity: 1;
-  z-index: 1;
-  background: white;
+    position: sticky;
+    opacity: 1;
+    z-index: 1;
+    background: white;
 }
 
 .thead-sticky tr:last-child>* {
-  top: 0;
+    top: 0;
 }
 
 .tfoot-sticky tr:first-child>* {
-  bottom: 0
+    bottom: 0
 }
 
 .with-b-radius {
-  & .q-dialog__inner--maximized>div {
-      border-radius: 10px 10px 0 0!important;
-  }
+    & .q-dialog__inner--maximized>div {
+        border-radius: 10px 10px 0 0!important;
+    }
+}
+
+.with-t-radius {
+    & .q-dialog__inner--maximized>div {
+        border-radius: 0 0 10px 10px!important;
+    }
 }
 
 .leaflet-control-attribution {
-  display: none;
+    display: none;
 }
 
 .q-toggle__label:hover {
-  color: #ff3d00;
+    color: #ff3d00;
 }
 
 .btn-group-content .q-btn__content {
-  display: flex!important;
-  flex-direction: column!important;
-  align-items: center!important;
-  justify-content: center!important;
-  flex-wrap: nowrap!important;
-  width: 100%!important;
+    display: flex!important;
+    flex-direction: column!important;
+    align-items: center!important;
+    justify-content: center!important;
+    flex-wrap: nowrap!important;
+    width: 100%!important;
 }
 
 .q-btn__content {
-  transition: none;
+    transition: none;
+}
+
+.q-btn--dense {
+    padding: 0;
 }
 
 .q-item {
-  min-height: 20px!important;
-  padding: 5px 8px!important;
-  /* color: black; */
-  transition: none!important;
-  white-space: normal;
-  font-size: 12px;
+    min-height: 20px!important;
+    padding: 5px 8px!important;
+    /* color: black; */
+    transition: none!important;
+    white-space: normal;
+    font-size: 12px;
 }
 
 .q-item__section--main+.q-item__section--main {
-  margin-left: 0;
+    margin-left: 0;
 }
 
 .q-item__section--main {
-  // flex: 0 10 15%!important;
-  min-width: 43px;
-  //width: auto;
+    // flex: 0 10 15%!important;
+    min-width: 43px;
+    //width: auto;
 }
 
 .tracker {
-  &.current {
-    background: rgb(243, 241, 241)
-  }
+    &.current {
+        background: rgb(243, 241, 241)
+    }
 }
 
 .leaflet-marker-icon {
-  &.current {
-    border-radius: 50%;
-    background: linear-gradient(
-      45deg,
-      rgba(11, 114, 137, 1),
-      rgba(72, 158, 60, 1),
-      rgba(158, 127, 60, 1),
-      rgba(158, 60, 158, 1),
-      rgba(60, 119, 158, 1)
-    );
-    background-size: 300% 300%;
-    animation: gradient 3s ease infinite;
-  }
+    &.current {
+        border-radius: 50%;
+        background: linear-gradient( 45deg, rgba(11, 114, 137, 1), rgba(72, 158, 60, 1), rgba(158, 127, 60, 1), rgba(158, 60, 158, 1), rgba(60, 119, 158, 1));
+        background-size: 300% 300%;
+        animation: gradient 3s ease infinite;
+    }
+}
+
+a {
+    text-decoration: none;
 }

@@ -30,6 +30,7 @@ export default {
   login: 'login',
   password: 'password',
   demo: 'demo',
-  remember_me: 'remember me',
-  need_help: 'need help?'
+  remember_me: 'Remember me',
+  need_help: 'Need help?',
+  notifies: 'notifies'
 };

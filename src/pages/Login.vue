@@ -19,7 +19,7 @@
     <div class="column q-mt-xl full-width q-px-md q-gutter-y-lg">
       <q-input
         rounded
-        standout="bg-transparent text-white"
+        standout="bg-teal-5"
         class="full-width"
         :label="$t('login')"
         clearable
@@ -37,7 +37,7 @@
       <q-input
         rounded
         autocomplete="off"
-        standout="bg-transparent text-white"
+        standout="bg-teal-5"
         class="full-width"
         :label="$t('password')"
         label-color="black"
@@ -82,7 +82,7 @@
       <div class="row justify-between full-width">
         <q-toggle
           :label="$t('remember_me')"
-          class="text-black text-bold text-capitalize"
+          class="text-black text-bold"
           color="deep-orange-12"
           size="md"
           v-model="form.remember_me"
@@ -90,7 +90,7 @@
         <MBtn
           color="transparent"
           flat
-          class_name="text-black text-bold text-hover text-capitalize"
+          class_name="text-black text-bold text-hover"
           :label="$t('need_help')"
           @click="visible = !visible"
         />
@@ -98,8 +98,48 @@
           v-model="visible"
           icon="eva-arrow-ios-downward-outline"
           :MBtn="{ size: 'xl' }"
-        />
+        >
+          <div class="q-pa-md">
+            <q-list separator class="help-select">
+              <q-item v-for="(t, i) in getContacts" :key="i" clickable>
+                <q-item-section>
+                  <q-item-label class="font-16 text-bold">{{ t.title }}</q-item-label>
+                  <a
+                    :href="t.link"
+                    target="_blank"
+                    v-if="t.link"
+                    class="font-16 text-regular text-hover"
+                  >
+                    <q-item-label
+                      class="font-16 text-regular text-hover"
+                      caption
+                    >
+                      {{ t.subtitle }}
+                    </q-item-label>
+                  </a>
+                  <q-item-label caption class="font-16 text-regular" v-else>
+                    {{ t.subtitle }}
+                  </q-item-label>
+                </q-item-section>
+                <q-item-section avatar>
+                  <q-icon :name="t.icon" color="teal-5" size="md" />
+                </q-item-section>
+              </q-item>
+             </q-list>
+          </div>
+        </MDialog>
       </div>
+      <q-select
+        v-model="selectedLang"
+        :options="getLangOptions"
+        dense
+        class="text-bold self-center text-capitalize lang-select"
+        popup-content-class="text-bold text-capitalize lang-select-popup"
+        emit-value
+        map-options
+        option-label="label"
+        color="deep-orange-12"
+      />
     </div>
   </div>
 </template>
@@ -118,6 +158,7 @@ export default defineComponent({
     const router = useRouter();
     const isPwd = ref(true);
     const visible = ref(false)
+    const selectedLang = ref('ru')
     const form = reactive({
       remember_me: false,
       password: '',
@@ -149,7 +190,7 @@ export default defineComponent({
             position: 'center',
             timeout: 1500,
             color: 'white',
-            textColor: 'deep-orange',
+            textColor: 'deep-orange-12',
             classes: 'text-bold'            
           })
         });
@@ -162,6 +203,58 @@ export default defineComponent({
     const hide = () => {
       visible.value = false;
     };
+
+    const getContacts = computed(() => {
+      const contacts = []
+      contacts.push(
+        {
+          title: 'Горячая линия (бесплатно)',
+          subtitle: '+7(800)333-68-83',
+          link: 'tel:+78003336883',
+          icon: 'support_agent'
+        },
+        {
+          title: 'Горчая линия',
+          subtitle: '+7(495)668-09-98',
+          link: 'tel:+74956680998',
+          icon: 'local_phone'
+        },
+        {
+          title: 'Электронная почта',
+          subtitle: 'contact@kgk-global.com',
+          link: 'mailto:contact@kgk-global.com',
+          icon: 'alternate_email'
+        },
+        {
+          title: 'Почтовый адрес',
+          subtitle: '117513, г. Москва, Ленинский пр-т, 137, к.1',
+          icon: 'pin_drop'
+        },
+        {
+          title: 'Сайт компании',
+          subtitle: 'kgk-global.com',
+          icon: 'public',
+          link: 'https://www.kgk-global.com/'
+        }
+      )
+      return contacts
+    });
+
+    const getLangOptions = computed(() => {
+      const langs = []
+      langs.push(
+        {
+          label: 'русский',
+          value: 'ru'
+        },
+        {
+          label: 'english',
+          value: 'en'
+        }
+      )
+      return langs
+    });
+
     return {
       form,
       isPwd,
@@ -169,7 +262,10 @@ export default defineComponent({
       login,
       visible,
       show,
-      hide
+      hide,
+      selectedLang,
+      getLangOptions,
+      getContacts
     };
   },
 });
@@ -184,6 +280,24 @@ export default defineComponent({
   padding: 20px
   box-shadow: 0 0 0 0 rgba(245,235,245, 1)
   animation: pulse-red 5s infinite
+
+.lang-select-popup
+  & .q-item
+    padding: 5px 12px!important
+    font-size: 16px!important
+    font-weight: 600
+
+.lang-select
+  &.q-field--standard .q-field__control:before
+    border-bottom: none
+    transition: none
+
+  & .q-select__dropdown-icon
+    display: none
+
+.help-select
+  & .q-item
+      min-height: 70px !important
 
 @keyframes pulse-red
   0%

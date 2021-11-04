@@ -1,5 +1,18 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <q-header class="bg-white">
+      <q-toolbar class="no-padding shadow-1">
+        <MBtn
+          icon="eva-arrow-ios-downward-outline"
+          size="20px"
+          flat
+          text-color="black"
+          dense
+          class="self-end justify-center row full-width"
+          @click="openActiveTracker"
+        />
+      </q-toolbar>
+    </q-header>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -26,6 +39,7 @@
 import { defineComponent, onBeforeMount, computed, watch } from 'vue';
 import { useQuasar } from 'quasar';
 import TrackersList from 'src/components/trackers/TrackersList.vue';
+import ActiveTracker from 'src/components/trackers/ActiveTracker.vue'
 import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 import { User } from 'src/models/user';
@@ -66,32 +80,40 @@ export default defineComponent({
       $q.dialog({ component: TrackersList });
     };
 
+    const openActiveTracker = () => {
+      $q.dialog({ component: ActiveTracker })
+    };
+
     const footer_btns = computed(() => {
       const btns = [];
       btns.push(
         {
           name: 'devices',
-          icon: 'eva-car-outline',
+          icon: 'time_to_leave',
         },
         {
           name: 'events',
-          icon: 'eva-email-outline',
+          icon: 'send',
         },
         {
           name: 'reports',
-          icon: 'eva-file-text-outline',
+          icon: 'trending_up',
         },
         {
           name: 'account',
-          icon: 'eva-person-outline',
+          icon: 'perm_identity',
         },
+        // {
+        //   name: 'payment',
+        //   icon: 'account_balance_wallet',
+        // },
         {
           name: 'help',
           icon: 'eva-question-mark-circle-outline',
         },
         {
           name: 'settings',
-          icon: 'eva-settings-2-outline',
+          icon: 'manage_accounts',
         }
       );
       return btns;
@@ -106,6 +128,7 @@ export default defineComponent({
       openPanel,
       footer_btns,
       getBtnFunct,
+      openActiveTracker
     };
   },
 });
