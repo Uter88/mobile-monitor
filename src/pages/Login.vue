@@ -12,7 +12,7 @@
     v-if="form"
   >
     <q-icon
-      name="img: icons/main/signal.svg"
+      name="img:icons/main/tracker.svg"
       size="130px"
       class="animate-icon"
     />
@@ -65,7 +65,7 @@
         push
         rounded
         :label="$t('enter')"
-        size="lg"
+        size="25px"
         :disable="!getDisabled"
         @click="login"
         class="text-capitalize"
@@ -75,7 +75,7 @@
         push
         rounded
         :label="$t('demo')"
-        size="lg"
+        size="25px"
         type="password"
         class="text-capitalize"
       />

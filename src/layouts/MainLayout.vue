@@ -1,10 +1,11 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-white">
-      <q-toolbar class="no-padding shadow-1 row justify-center">
+      <q-toolbar class="no-padding row justify-center" v-if="tracker">
+        {{tracker}}
         <MBtn
           icon="eva-arrow-ios-downward-outline"
-          size="20px"
+          size="xl"
           flat
           text-color="black"
           dense
@@ -44,6 +45,7 @@ import ActiveTracker from 'src/components/trackers/ActiveTracker.vue';
 import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 import { User } from 'src/models/user';
+import { Tracker } from 'src/models/tracker/tracker';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -53,7 +55,7 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const group = computed(() => store.state.main.config.group);
-
+    const tracker = computed(() => store.state.trackers.current as Tracker);
     const getData = () => {
       void store.dispatch('trackers/getTrackers');
     };
@@ -79,9 +81,9 @@ export default defineComponent({
 
     onBeforeMount(initApp);
     watch(group, getData);
-
+    
     const openActiveTracker = () => {
-      $q.dialog({ component: ActiveTracker });
+      $q.dialog({ component: ActiveTracker, componentProps: { tracker: tracker.value } });
     };
 
     const footer_btns = computed(() => {
@@ -89,7 +91,7 @@ export default defineComponent({
       btns.push(
         {
           name: 'devices',
-          icon: 'eva-car-outline',
+          icon: 'drive_eta',
           handler: () => $q.dialog({ component: TrackersList }),
         },
         {
@@ -123,6 +125,7 @@ export default defineComponent({
     return {
       footer_btns,
       openActiveTracker,
+      tracker
     };
   },
 });

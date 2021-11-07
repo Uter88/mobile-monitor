@@ -22,8 +22,9 @@
           <span
             class="wd-label text-uppercase text-bold q-ml-sm"
             v-if="label"
-            >{{ label }}</span
           >
+            {{ label }}
+          </span>
           <MBtn
             :icon="icon"
             flat
