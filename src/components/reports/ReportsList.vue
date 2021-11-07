@@ -1,7 +1,9 @@
 <template>
   <MDialog v-model="visible" :label="$t('reports')">
-    <MDatePicker type="datetimerange" v-model="form.dates" />
-    <MBtn :label="$t('start')" @click="getReport" />
+    <div class="q-gutter-sm">
+      <MDatePicker type="datetimerange" v-model="form.dates" />
+      <MBtn :label="$t('start')" @click="getReport" :dense="false" />
+    </div>
   </MDialog>
 </template>
 

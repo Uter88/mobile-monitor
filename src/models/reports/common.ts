@@ -56,4 +56,87 @@ class ReportEvent {
   }
 }
 
-export { ReportEvent, EventType };
+interface ReportParams {
+  device_id: number | number[];
+  ts_start: number;
+  ts_stop: number;
+  offset_utc: number;
+  event_types: string | string[];
+  stop_time: number;
+  token: string;
+}
+
+type ReportKind =
+  | 'detail_route'
+  | 'summary_route'
+  | 'detail_fuel'
+  | 'summary_fuel'
+  | 'speed'
+  | 'temp';
+
+class ReportType {
+  kind: ReportKind;
+  path: string;
+  max_period: number;
+  multiple?: boolean;
+  no_today?: boolean;
+  need_fuel?: boolean;
+  need_temp?: boolean;
+
+  constructor(t: ReportType) {
+    this.kind = t.kind;
+    this.path = t.path;
+    this.multiple = t.multiple;
+    this.no_today = t.no_today;
+    this.max_period = t.max_period;
+    this.need_fuel = t.need_fuel;
+    this.need_temp = t.need_temp;
+  }
+
+  static create(kind: ReportKind) {
+    switch (kind) {
+      case 'detail_route':
+        return new ReportType({ kind, path: '/route/detail', max_period: 31 });
+      case 'summary_route':
+        return new ReportType({
+          kind,
+          path: '/route/summary',
+          max_period: 31,
+          multiple: true,
+        });
+      case 'detail_fuel':
+        return new ReportType({
+          kind,
+          path: '/fuel/detail',
+          max_period: 90,
+          need_fuel: true,
+        });
+      case 'summary_fuel':
+        return new ReportType({
+          kind,
+          path: '/fuel/summary',
+          max_period: 90,
+          need_fuel: true,
+          multiple: true,
+        });
+      case 'speed':
+        return new ReportType({
+          kind,
+          path: '/speed',
+          max_period: 31,
+          multiple: true,
+        });
+      case 'temp':
+        return new ReportType({
+          kind,
+          path: '/temperature',
+          max_period: 31,
+          need_temp: true,
+        });
+      default:
+        return new ReportType({ kind, path: '/route/detail', max_period: 31 });
+    }
+  }
+}
+
+export { ReportEvent, EventType, ReportParams, ReportType };

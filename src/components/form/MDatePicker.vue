@@ -52,10 +52,11 @@ export default defineComponent({
       dir: 'start' | 'stop'
     ): Date => {
       if (!val) return new Date();
+      if (val instanceof Date) return val;
 
       if (Array.isArray(val)) {
         val = dir === 'start' ? val[0] : val[1];
-      } else if (val['from'] || val['to']) {
+      } else if (typeof val == 'object') {
         val = dir === 'start' ? val['from'] : val['to'];
       }
       return new Date(val);

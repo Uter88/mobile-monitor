@@ -6,6 +6,7 @@
     full-width
     content-class="self-end"
     content-style="height: 30vh;"
+    @close="hide"
   >
     <div v-if="report">
       <q-list dense>
@@ -33,10 +34,11 @@
 
 <script lang="ts">
 import { date } from 'quasar';
+import { ReportParams } from 'src/models/reports/common';
 import { DetailRouteReport } from 'src/models/reports/detailRoute';
 import { Track } from 'src/models/reports/track';
 import { useStore } from 'src/store';
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, watch, PropType } from 'vue';
 
 export default defineComponent({
   name: 'DetailReport',
@@ -44,7 +46,8 @@ export default defineComponent({
     from: Date,
     to: Date,
     params: {
-      type: Object,
+      type: Object as PropType<ReportParams>,
+      required: true,
     },
   },
   setup(props) {
@@ -53,10 +56,11 @@ export default defineComponent({
 
     const report = ref<DetailRouteReport>();
     const track = ref<Track>();
+    const current = computed(() => store.state.trackers.current);
 
-    const getReport = () => {
+    const getReport = (params: ReportParams) => {
       store
-        .dispatch('reports/getDetailRouteReports', props.params)
+        .dispatch('reports/getDetailRouteReports', params)
         .then((r: DetailRouteReport[]) => {
           const rep = new DetailRouteReport(r[0]);
           store.commit('reports/setEvents', rep.events);
@@ -67,9 +71,9 @@ export default defineComponent({
         });
     };
 
-    const getTrack = () => {
+    const getTrack = (params: ReportParams) => {
       store
-        .dispatch('reports/getTracks', props.params)
+        .dispatch('reports/getTracks', params)
         .then((t: Track[]) => {
           const tr = new Track(t[0]);
           store.commit('reports/setTrack', tr.track);
@@ -80,14 +84,25 @@ export default defineComponent({
     };
 
     const show = () => {
-      getReport();
-      getTrack();
+      getReport(props.params);
+      getTrack(props.params);
       visible.value = true;
     };
+
     const hide = () => {
       visible.value = false;
       store.commit('reports/setTrack', []);
+      store.commit('reports/setEvents', []);
     };
+
+    watch(current, (tr) => {
+      const p = props.params;
+      if (tr) {
+        p.device_id = tr.device_id;
+        getReport(p);
+        getTrack(p);
+      }
+    });
 
     const getLabel = computed(() => {
       return [
