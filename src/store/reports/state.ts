@@ -4,8 +4,8 @@ import { TrackPoint } from 'src/models/reports/track';
 export interface ReportsStateInterface {
   type: ReportType;
   types: ReportType[];
-  track: TrackPoint[];
-  events: ReportEvent[];
+  track: readonly TrackPoint[];
+  events: readonly ReportEvent[];
 }
 
 function state(): ReportsStateInterface {

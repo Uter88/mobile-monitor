@@ -59,6 +59,9 @@ export default defineComponent({
     };
 
     const initApp = () => {
+      console.warn = () => {
+        //
+      };
       store
         .dispatch('main/checkAuth')
         .then((u: User) => {

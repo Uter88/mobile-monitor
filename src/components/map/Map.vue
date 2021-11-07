@@ -48,20 +48,19 @@ import { useStore } from 'src/store';
 import { Tracker } from 'src/models/tracker/tracker';
 import Fab from 'src/components/buttons/Fab.vue';
 import FabAct from 'components/buttons/FabAct.vue';
-import { debounce, useQuasar } from 'quasar';
+import { useQuasar } from 'quasar';
 import { ReportEvent } from 'src/models/reports/common';
+import { TrackPoint } from 'src/models/reports/track';
+import { MapManager } from './utils/map-manager';
 
 export default defineComponent({
   name: 'Map',
   components: { Fab, FabAct },
   setup() {
-    const map = ref<L.Map>();
+    const map = ref<MapManager>();
     const store = useStore();
     const $q = useQuasar();
-    const getMap = () => map.value as L.Map;
-    const trackersGroup = L.layerGroup();
-    const trackGroup = L.layerGroup();
-    const eventsGroup = L.layerGroup();
+    const getMap = () => map.value as MapManager;
     const fabPos = reactive([18, 18]);
 
     const zoom = computed({
@@ -77,58 +76,24 @@ export default defineComponent({
     const trackers = computed(
       () => store.getters['trackers/getSelected'] as Tracker[]
     );
+    watch(trackers, (t) => getMap().initTrackers(t));
 
-    const track = computed(() => store.state.reports.track);
+    const track = computed(() => store.state.reports.track as TrackPoint[]);
+    watch(track, (t) => getMap().initTrack(t));
     const events = computed(
       () => store.getters['reports/getEvents'] as ReportEvent[]
     );
+    watch(events, (e) => getMap().initEvents(e));
 
     const initMap = () => {
       void store.dispatch('main/getPosition');
-      const m = L.map('map', {
+      map.value = new MapManager('map', {
+        maxZoom: 19,
         renderer: L.canvas(),
-        zoomControl: false,
-      });
-      const { lat, lng } = center.value;
-      m.setView({ lat, lng }, zoom.value);
-      trackersGroup.addTo(m);
-      trackGroup.addTo(m);
-      eventsGroup.addTo(m);
-      map.value = m;
-      initLayers(m);
-      initEvents(m);
-    };
-
-    const initLayers = (m: L.Map) => {
-      const tiles = L.control.layers();
-      tiles.setPosition('bottomleft')
-      const active = store.state.main.config.layer;
-
-      for (const l of store.state.main.tileLayers) {
-        const layer = L.tileLayer(l.url);
-        layer.on('add', () => {
-          store.commit('main/updateConfig', { layer: l.name });
-        });
-        if (l.name === active) layer.addTo(m);
-        tiles.addBaseLayer(layer, l.name);
-      }
-      tiles.addTo(m);
-    };
-
-    const initEvents = (m: L.Map) => {
-      m.on('zoom', () => {
-        zoom.value = m.getZoom();
-        resize();
+        center: center.value,
+        zoom: zoom.value,
       });
     };
-
-    const resize = debounce(
-      () => {
-        getMap().invalidateSize();
-      },
-      300,
-      true
-    );
 
     const moveFab = (e: {
       position: { left: number; top: number };
@@ -143,44 +108,10 @@ export default defineComponent({
       fabPos[1] -= e.delta.y;
     };
 
-    onMounted(initMap);
-
     watch(zoom, (z) => getMap().setZoom(z));
-    watch(center, (c) => getMap().setView(c), { deep: true });
+    watch(center, (c) => getMap().setCenter(c), { deep: true });
 
-    watch(trackers, (tr) => {
-      trackersGroup.clearLayers();
-
-      for (let i = 0; i < tr.length; i++) {
-        const t = tr[i];
-        const layer = t.getMarker();
-        trackersGroup.addLayer(layer);
-
-        layer.on('click', () => {
-          store.commit('trackers/setCurrent', t);
-        });
-
-        if (!store.state.trackers.current && t.is_active) {
-          store.commit('trackers/setCurrent', t);
-        }
-      }
-    });
-
-    watch(track, (t) => {
-      trackGroup.clearLayers();
-      const layer = L.polyline(t);
-      trackGroup.addLayer(layer);
-    });
-
-    watch(events, (evs) => {
-      eventsGroup.clearLayers();
-      for (const e of evs) {
-        const m = L.marker(e, {
-          icon: L.icon({ iconUrl: e.getIcon(), iconSize: [18, 18] }),
-        });
-        eventsGroup.addLayer(m);
-      }
-    });
+    onMounted(initMap);
 
     return {
       map,

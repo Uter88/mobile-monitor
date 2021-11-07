@@ -5,10 +5,10 @@ import { ReportsStateInterface } from './state';
 
 const mutation: MutationTree<ReportsStateInterface> = {
   setTrack(state, track: TrackPoint[]) {
-    state.track = track;
+    state.track = Object.freeze(track);
   },
   setEvents(state, events: ReportEvent[]) {
-    state.events = events;
+    state.events = Object.freeze(events);
   },
 };
 

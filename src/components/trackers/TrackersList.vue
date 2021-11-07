@@ -1,5 +1,9 @@
 <template>
-  <MDialog v-model="visible" :label="$t('objects')">
+  <MDialog
+    v-model="visible"
+    :label="$t('objects')"
+    content-class="row no-wrap q-mt-md"
+  >
     <div class="row q-gutter-md q-pa-sm">
       <q-select
         class="col"
@@ -172,8 +176,7 @@ export default defineComponent({
 
     const activate = (e: { target: HTMLElement }, t: Tracker) => {
       if (!t.is_active) return;
-      store.commit('trackers/setCurrent', t);
-      store.commit('main/setCenter', t.getCoords());
+      void store.dispatch('trackers/setCurrent', t);
 
       if (selected.value.indexOf(t.device_id) === -1) {
         select(t);

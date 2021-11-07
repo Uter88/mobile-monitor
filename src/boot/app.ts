@@ -4,6 +4,7 @@ import MDialog from 'components/dialog/MDialog.vue';
 import MBtn from 'components/buttons/MBtn.vue';
 import MTooltip from 'components/tooltips/MTooltip.vue';
 import MDatePicker from 'components/form/MDatePicker.vue';
+import 'element-plus/dist/index.css';
 
 export default boot(({ app }) => {
   app.component('MBtn', MBtn);

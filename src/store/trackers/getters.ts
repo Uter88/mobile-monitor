@@ -16,6 +16,9 @@ const getters: GetterTree<TrackersStateInterface, StateInterface> = {
     }
     return result;
   },
+  getActive(state) {
+    return state.trackers.filter((t) => t.is_active);
+  },
 };
 
 export default getters;

@@ -1,3 +1,5 @@
+import { date } from 'quasar';
+
 type EventType =
   | 'moving'
   | 'parking'
@@ -57,13 +59,14 @@ class ReportEvent {
 }
 
 interface ReportParams {
-  device_id: number | number[];
+  device_id: number[] | number;
   ts_start: number;
   ts_stop: number;
   offset_utc: number;
   event_types: string | string[];
   stop_time: number;
   token: string;
+  path: string;
 }
 
 type ReportKind =
@@ -74,7 +77,17 @@ type ReportKind =
   | 'speed'
   | 'temp';
 
-class ReportType {
+interface IReportType {
+  kind: ReportKind;
+  path: string;
+  max_period: number;
+  multiple?: boolean;
+  no_today?: boolean;
+  need_fuel?: boolean;
+  need_temp?: boolean;
+}
+
+class ReportType implements IReportType {
   kind: ReportKind;
   path: string;
   max_period: number;
@@ -83,7 +96,7 @@ class ReportType {
   need_fuel?: boolean;
   need_temp?: boolean;
 
-  constructor(t: ReportType) {
+  constructor(t: IReportType) {
     this.kind = t.kind;
     this.path = t.path;
     this.multiple = t.multiple;
@@ -136,6 +149,27 @@ class ReportType {
       default:
         return new ReportType({ kind, path: '/route/detail', max_period: 31 });
     }
+  }
+  getDates() {
+    const dates = { from: new Date(), to: new Date() };
+    switch (this.kind) {
+      case 'summary_route':
+      case 'summary_fuel':
+        dates.from = date.subtractFromDate(new Date(), { days: 7 });
+        dates.to = date.subtractFromDate(new Date(), { days: 1 });
+        break;
+    }
+    return dates;
+  }
+
+  getDisabledDates(dt: Date): boolean {
+    const now = new Date();
+    now.setHours(23, 59, 59, 0);
+
+    if (this.kind === 'summary_route' || this.kind === 'summary_fuel') {
+      date.subtractFromDate(dt, { days: 1 });
+    }
+    return dt > now;
   }
 }
 
