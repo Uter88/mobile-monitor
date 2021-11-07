@@ -134,6 +134,10 @@ td {
     padding: 0;
 }
 
+.q-btn-group {
+    box-shadow: none;
+}
+
 .q-item {
     min-height: 20px!important;
     padding: 5px 8px!important;
@@ -159,12 +163,37 @@ td {
     }
 }
 
-.leaflet-marker-icon {
-    &.current {
-        border-radius: 50%;
-        background: linear-gradient( 45deg, rgba(11, 114, 137, 1), rgba(72, 158, 60, 1), rgba(158, 127, 60, 1), rgba(158, 60, 158, 1), rgba(60, 119, 158, 1));
-        background-size: 300% 300%;
-        animation: gradient 3s ease infinite;
+// .leaflet-marker-icon {
+//     &.current {
+//         border-radius: 50%;
+//         background: linear-gradient(-45deg, rgba(11, 114, 137, 1), rgba(72, 158, 60, 1), rgba(158, 127, 60, 1), rgba(158, 60, 158, 1), rgba(60, 119, 158, 1));
+//         background-size: 300% 300%;
+//         padding: 20px;
+//         animation: gradient 3s ease infinite;
+//     }
+// }
+.current-tracker.q-icon {
+    border-radius: 50%;
+    background: linear-gradient(45deg, rgba(11, 114, 137, 0.9), rgba(72, 158, 60, 0.9), rgba(158, 127, 60, 0.9), rgba(158, 60, 158, 0.9), rgba(60, 119, 158, 0.9));
+    padding: 10px;
+    animation: gradient 1s linear infinite;
+}
+
+@keyframes gradient {
+    100% {
+        background: linear-gradient(45deg, rgba(11, 114, 137, 0.5), rgba(72, 158, 60, 0.5), rgba(158, 127, 60, 0.5), rgba(158, 60, 158, 0.5), rgba(60, 119, 158, 0.5));
+    }
+    75% {
+        background: linear-gradient(45deg, rgba(11, 114, 137, 0.6), rgba(72, 158, 60, 0.6), rgba(158, 127, 60, 0.6), rgba(158, 60, 158, 0.6), rgba(60, 119, 158, 0.6));
+    }
+    45% {
+        background: linear-gradient(45deg, rgba(11, 114, 137, 0.7), rgba(72, 158, 60, 0.7), rgba(158, 127, 60, 0.7), rgba(158, 60, 158, 0.7), rgba(60, 119, 158, 0.7));
+    }
+    25% {
+        background: linear-gradient(45deg, rgba(11, 114, 137, 0.8), rgba(72, 158, 60, 0.8), rgba(158, 127, 60, 0.8), rgba(158, 60, 158, 0.8), rgba(60, 119, 158, 0.8));
+    }
+    0% {
+        background: linear-gradient(45deg, rgba(11, 114, 137, 0.9), rgba(72, 158, 60, 0.9), rgba(158, 127, 60, 0.9), rgba(158, 60, 158, 0.9), rgba(60, 119, 158, 0.9));
     }
 }
 

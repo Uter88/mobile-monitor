@@ -238,7 +238,7 @@ export class Tracker {
   setMarkerIcon() {
     if (!this._marker) return;
     this._marker.setIcon(
-      new L.Icon({ iconUrl: this.getIcon(), iconSize: [18, 18] })
+      new L.Icon({ iconUrl: this.getIcon(), iconSize: [18, 18], className: 'q-icon current-tracker' })
     );
   }
 
